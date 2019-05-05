@@ -1,6 +1,6 @@
 ﻿namespace NeuralNetworkOnPaper.BrainModel
 {
-    class Axon
+    public class Axon
     {
         public double signal { get; set; }
     }

@@ -40,18 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArtificalBrain\ADALINE.cs" />
+    <Compile Include="ArtificalBrain\ADALINE\LayerAdaline.cs" />
+    <Compile Include="ArtificalBrain\ADALINE\NeuronAdaline.cs" />
+    <Compile Include="ArtificalBrain\ADALINE\NetworkAdaline.cs" />
     <Compile Include="BrainBooster\Learn.cs" />
     <Compile Include="BrainBooster\Startup.cs" />
-    <Compile Include="BrainModel\Component\Axon.cs" />
-    <Compile Include="BrainModel\Layer\Linear\LayerLinear.cs" />
-    <Compile Include="BrainModel\Layer\Nonlinear\NonlinearHiddenLayer.cs" />
-    <Compile Include="BrainModel\Layer\Nonlinear\NonlinearInputLayer.cs" />
-    <Compile Include="BrainModel\Layer\Nonlinear\NonlinearOutputLayer.cs" />
-    <Compile Include="BrainModel\Component\NeuronLinear.cs" />
-    <Compile Include="BrainModel\Component\Synapse.cs" />
-    <Compile Include="BrainModel\Component\NonlinearNeuron.cs" />
-    <Compile Include="BrainModel\Network\NeuralNetworkLinear.cs" />
+    <Compile Include="BrainModel\Axon.cs" />
+    <Compile Include="BrainModel\Neuron\INeuron.cs" />
+    <Compile Include="BrainModel\Layer.cs" />
+    <Compile Include="BrainModel\Neuron\Neuron.cs" />
+    <Compile Include="BrainModel\Synapse.cs" />
     <Compile Include="BrainBooster\Config.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

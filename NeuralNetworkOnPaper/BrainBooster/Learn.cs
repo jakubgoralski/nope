@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NeuralNetworkOnPaper.BrainBooster
 {
-    class Learn : Config
+    public class Learn : Config
     {
         public List<LinkedList<double>> examineDataSet;
         private Random random = new Random();
