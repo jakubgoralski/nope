@@ -5,6 +5,7 @@ namespace NeuralNetworkOnPaper.BrainModel
     public class Neuron : Config, INeuron
     {
         public List<Synapse> Synapses { get; set; }
+        public Synapse Bias { get; set; }
         public Axon Axon { get; set; }
         public bool isInputLayer { get; set; }
         public double error { get; set; }
@@ -17,6 +18,7 @@ namespace NeuralNetworkOnPaper.BrainModel
         public void Configure(int SynapsesAmount, bool isNeuronInInputLayer = false)
         {
             Synapses = new List<Synapse>();
+            Bias = new Synapse();
             isInputLayer = isNeuronInInputLayer;
             SynapsesAmount = isInputLayer ? 1 : SynapsesAmount;
             for (int i = 0; i < SynapsesAmount; i++)
@@ -46,6 +48,7 @@ namespace NeuralNetworkOnPaper.BrainModel
             {
                 Axon.signal += Synapses[i++].Run(signal);
             }
+            Axon.signal += Bias.Run(1);
         }
     }
 }

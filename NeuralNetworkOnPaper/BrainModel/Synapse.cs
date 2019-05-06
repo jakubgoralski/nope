@@ -9,7 +9,7 @@ namespace NeuralNetworkOnPaper
         public double signalOutput { get; set; }
         public bool isInputLayer { get; set; }
 
-        public Synapse(bool isSynapseInNeuronInInputLayer)
+        public Synapse(bool isSynapseInNeuronInInputLayer = false)
         {
             isInputLayer = isSynapseInNeuronInInputLayer;
             weight = isInputLayer ? 1 : Startup.getInitialSynapseWeight();

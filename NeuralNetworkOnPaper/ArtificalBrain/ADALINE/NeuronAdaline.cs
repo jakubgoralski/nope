@@ -19,6 +19,7 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
             {
                 synapse.weight = synapse.weight + learningRate * error * synapse.signalInput;
             }
+            Bias.weight = Bias.weight + learningRate * error;
         }
     }
 }

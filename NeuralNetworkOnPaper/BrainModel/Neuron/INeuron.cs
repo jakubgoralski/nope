@@ -12,6 +12,9 @@ namespace NeuralNetworkOnPaper.BrainModel
         List<Synapse> Synapses { get; set; }
 
         //
+        Synapse Bias { get; set; }
+
+        //
         Axon Axon { get; set; }
 
         /*
