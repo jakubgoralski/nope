@@ -7,14 +7,20 @@ namespace NeuralNetworkOnPaper.BrainModel
         public List<Synapse> Synapses { get; set; }
         public Synapse Bias { get; set; }
         public Axon Axon { get; set; }
+
+        //
         public bool isInputLayer { get; set; }
+
+        //
         public double error { get; set; }
         
+        //
         public Neuron()
         {
 
         }
 
+        //
         public void Configure(int SynapsesAmount, bool isNeuronInInputLayer = false)
         {
             Synapses = new List<Synapse>();
@@ -26,6 +32,7 @@ namespace NeuralNetworkOnPaper.BrainModel
             Axon = new Axon();
         }
 
+        //
         public double Run(LinkedList<double> signals)
         {
             if (isInputLayer)
@@ -35,11 +42,13 @@ namespace NeuralNetworkOnPaper.BrainModel
             return Axon.signal;
         }
 
+        //
         public void RunInput(double signal)
         {
             Axon.signal = Synapses[0].Run(signal);
         }
 
+        //
         public void RunNeuron(LinkedList<double> signals)
         {
             int i = 0;

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
 {
-    class LayerAdaline : Layer
+    class LayerMadaline : Layer
     {
         /*
          * PROPERTIES
          */
-        
+
         //
         public List<NeuronAdaline> neurons { get; set; }
 
@@ -17,20 +17,21 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
          */
 
         //
-        public LayerAdaline()
+        public LayerMadaline()
         {
 
         }
 
         //
-        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount)
+        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, bool isInputLayer)
         {
-            base.Configure();
+            IsInputLayer = isInputLayer;
+            base.Configure(false);
             neurons = new List<NeuronAdaline>();
             for (int i = 0; i < neuronsAmount; i++)
             {
                 NeuronAdaline neuron = new NeuronAdaline();
-                neuron.Configure(previousLayerNeuronsAmount);
+                neuron.Configure(previousLayerNeuronsAmount, IsInputLayer);
                 neurons.Add(neuron);
             }
         }
@@ -48,16 +49,6 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
             }
 
             return DataSetOutput;
-        }
-
-        //
-        public void Delta(LinkedList<double> resultSet)
-        {
-            foreach (NeuronAdaline neuron in neurons)
-            {
-                neuron.Delta(resultSet.First.Value);
-                resultSet.RemoveFirst();
-            }
         }
     }
 }

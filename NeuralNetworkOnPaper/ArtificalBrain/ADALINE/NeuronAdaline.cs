@@ -5,13 +5,23 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
 {
     public class NeuronAdaline : Neuron
     {
+        /*
+         * PROPERTIES
+         */
+
         private Layer layer { get; set; }
 
+        /*
+         * METHODS
+         */
+
+        //
         public NeuronAdaline()
         {
 
         }
-
+        
+        //
         public void Delta(double expectedResult)
         {
             error = expectedResult - Axon.signal;
