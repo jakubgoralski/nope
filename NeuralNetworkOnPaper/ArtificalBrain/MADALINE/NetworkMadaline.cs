@@ -69,10 +69,15 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.MADALINE
         {
             double error = ObjectiveFunction(givenResults, expectedResults);
 
-            //set wages of hidden layer
-
             //set wages of output layer
-            
+            layers.Last().Delta(new LinkedList<double>(givenResults));
+
+            //compute error for neurons from hidden layer
+            layers[1].ComputeError(layers.Last());
+
+            //set wages of hidden layer
+            layers[1].Delta();
+
         }
 
         public double ObjectiveFunction(LinkedList<double> givenResults, LinkedList<double> expectedResults)

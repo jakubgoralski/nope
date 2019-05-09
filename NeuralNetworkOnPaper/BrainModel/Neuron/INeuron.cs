@@ -26,5 +26,8 @@ namespace NeuralNetworkOnPaper.BrainModel
 
         //
         double Run(LinkedList<double> signals);
+
+        //
+        double ActivationFunction(double sum);
     }
 }

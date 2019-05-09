@@ -39,6 +39,7 @@ namespace NeuralNetworkOnPaper.BrainModel
                 RunInput(signals.First.Value);
             else
                 RunNeuron(signals);
+
             return Axon.signal;
         }
 
@@ -58,6 +59,15 @@ namespace NeuralNetworkOnPaper.BrainModel
                 Axon.signal += Synapses[i++].Run(signal);
             }
             Axon.signal += Bias.Run(1);
+        }
+
+        //
+        public virtual double ActivationFunction(double sum) // means basic Threshold Device
+        {
+            if (sum > 0)
+                return 1;
+            else
+                return -1;
         }
     }
 }

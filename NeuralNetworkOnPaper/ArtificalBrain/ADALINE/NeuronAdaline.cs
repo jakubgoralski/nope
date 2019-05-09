@@ -20,7 +20,7 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
         {
 
         }
-        
+
         //
         public void Delta(double expectedResult)
         {

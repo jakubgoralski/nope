@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
 {
+    //consider if not delete this class
     class LayerMadaline : Layer
     {
         /*
@@ -49,6 +50,27 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
             }
 
             return DataSetOutput;
+        }
+
+        //
+        public void Delta()
+        {
+        }
+
+        //
+        public void Delta(LinkedList<double> resultSet)
+        {
+            foreach (NeuronAdaline neuron in neurons)
+            {
+                neuron.Delta(resultSet.First.Value);
+                resultSet.RemoveFirst();
+            }
+        }
+
+        //
+        public void ComputeError(LayerMadaline outputLayer)
+        {
+
         }
     }
 }
