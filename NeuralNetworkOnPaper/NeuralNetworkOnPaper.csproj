@@ -43,6 +43,9 @@
     <Compile Include="ArtificalBrain\ADALINE\LayerAdaline.cs" />
     <Compile Include="ArtificalBrain\ADALINE\NeuronAdaline.cs" />
     <Compile Include="ArtificalBrain\ADALINE\NetworkAdaline.cs" />
+    <Compile Include="ArtificalBrain\Perceptron\MLPNetwork.cs" />
+    <Compile Include="ArtificalBrain\Perceptron\PerceptronLayer.cs" />
+    <Compile Include="ArtificalBrain\Perceptron\PerceptronNeuron.cs" />
     <Compile Include="BrainBooster\Learn.cs" />
     <Compile Include="BrainBooster\Startup.cs" />
     <Compile Include="BrainModel\Axon.cs" />
