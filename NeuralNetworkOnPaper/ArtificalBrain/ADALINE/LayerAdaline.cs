@@ -1,49 +1,66 @@
-﻿using NeuralNetworkOnPaper.BrainModel.Layer;
+﻿using System;
 using System.Collections.Generic;
 
 namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
 {
     class LayerAdaline : Layer
     {
+        /*
+         * PROPERTIES
+         */
+        
+        //
         public List<NeuronAdaline> neurons { get; set; }
 
+        /*
+         * METHODS
+         */
+
+        //
         public LayerAdaline()
         {
 
         }
 
+        //
         public void Configure(int neuronsAmount, int previousLayerNeuronsAmount)
         {
-            base.Configure(false);
+            base.Configure();
             neurons = new List<NeuronAdaline>();
+            Random random = new Random();
             for (int i = 0; i < neuronsAmount; i++)
             {
                 NeuronAdaline neuron = new NeuronAdaline();
-                neuron.Configure(previousLayerNeuronsAmount, this.isInputLayer);
+                neuron.Configure(previousLayerNeuronsAmount, layerType.Output, random);
                 neurons.Add(neuron);
             }
         }
 
+        //
         public LinkedList<double> Run(LinkedList<double> dataSet)
         {
-            dataSetInput = dataSet;
-            dataSetOutput.Clear();
+            DataSetInput = dataSet;
+            DataSetOutput.Clear();
 
             foreach (NeuronAdaline neuron in neurons)
             {
-                neuron.Run(dataSetInput);
-                dataSetOutput.AddLast(neuron.Axon.signal);
+                neuron.Run(DataSetInput);
+                DataSetOutput.AddLast(neuron.Axon.signal);
             }
 
-            return dataSetOutput;
+            return DataSetOutput;
         }
 
-        public void Delta(LinkedList<double> resultSet)
+        //
+        public void Delta(LinkedList<double> expectedResults)
         {
             foreach (NeuronAdaline neuron in neurons)
             {
-                neuron.Delta(resultSet.First.Value);
-                resultSet.RemoveFirst();
+                //compute error
+                neuron.error = expectedResults.First.Value - neuron.Axon.signal; // objective function: error = expected result - given result
+                expectedResults.RemoveFirst();
+                //compute new wages
+                neuron.Delta();
             }
         }
     }

@@ -259,3 +259,10 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/NeuralNetworkOnPaper/ArtificalBrain/Perceptron/MLPNetwork.cs
+/NeuralNetworkOnPaper/ArtificalBrain/Sigmoid/SigmoidNeuron.cs
+/NeuralNetworkOnPaper/ArtificalBrain/Sigmoid/SigmoidNetwork.cs
+/NeuralNetworkOnPaper/ArtificalBrain/Sigmoid/SigmoidLayer.cs
+/NeuralNetworkOnPaper/ArtificalBrain/Sigmoid
+/NeuralNetworkOnPaper/ArtificalBrain/Perceptron/PerceptronNeuron.cs
+/NeuralNetworkOnPaper/ArtificalBrain/Perceptron/PerceptronLayer.cs

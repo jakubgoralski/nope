@@ -41,18 +41,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArtificalBrain\ADALINE\LayerAdaline.cs" />
-    <Compile Include="ArtificalBrain\ADALINE\NeuronAdaline.cs" />
     <Compile Include="ArtificalBrain\ADALINE\NetworkAdaline.cs" />
+    <Compile Include="ArtificalBrain\MADALINE\LayerMadaline.cs" />
+    <Compile Include="ArtificalBrain\ADALINE\NeuronAdaline.cs" />
+    <Compile Include="ArtificalBrain\MADALINE\NetworkMadaline.cs" />
     <Compile Include="BrainBooster\Learn.cs" />
     <Compile Include="BrainBooster\Startup.cs" />
     <Compile Include="BrainModel\Axon.cs" />
+    <Compile Include="BrainModel\Layer\ILayer.cs" />
     <Compile Include="BrainModel\Neuron\INeuron.cs" />
-    <Compile Include="BrainModel\Layer.cs" />
+    <Compile Include="BrainModel\Layer\Layer.cs" />
     <Compile Include="BrainModel\Neuron\Neuron.cs" />
     <Compile Include="BrainModel\Synapse.cs" />
     <Compile Include="BrainBooster\Config.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

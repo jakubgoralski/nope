@@ -1,20 +1,26 @@
 ﻿using NeuralNetworkOnPaper.BrainModel;
-using NeuralNetworkOnPaper.BrainModel.Layer;
 
 namespace NeuralNetworkOnPaper.ArtificalBrain
 {
     public class NeuronAdaline : Neuron
     {
-        private Layer layer { get; set; }
+        /*
+         * PROPERTIES
+         */
 
+        /*
+         * METHODS
+         */
+
+        //
         public NeuronAdaline()
         {
 
         }
 
-        public void Delta(double expectedResult)
+        //
+        public void Delta()
         {
-            error = expectedResult - Axon.signal;
             foreach (Synapse synapse in Synapses)
             {
                 synapse.weight = synapse.weight + learningRate * error * synapse.signalInput;

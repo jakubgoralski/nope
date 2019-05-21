@@ -1,45 +1,58 @@
-﻿using System.Collections.Generic;
+﻿using NeuralNetworkOnPaper.BrainModel;
+using System;
+using System.Collections.Generic;
 
-namespace NeuralNetworkOnPaper.BrainModel
+namespace NeuralNetworkOnPaper
 {
     public class Neuron : Config, INeuron
     {
         public List<Synapse> Synapses { get; set; }
         public Synapse Bias { get; set; }
         public Axon Axon { get; set; }
-        public bool isInputLayer { get; set; }
+
+        //
+        public layerType LayerType { get; set; }
+
+        //
         public double error { get; set; }
         
+        //
         public Neuron()
         {
 
         }
 
-        public void Configure(int SynapsesAmount, bool isNeuronInInputLayer = false)
+        //
+        public void Configure(int SynapsesAmount, layerType layerType, Random random)
         {
+            LayerType = layerType;
             Synapses = new List<Synapse>();
-            Bias = new Synapse();
-            isInputLayer = isNeuronInInputLayer;
-            SynapsesAmount = isInputLayer ? 1 : SynapsesAmount;
+            if (! isInputLayer(layerType))
+                Bias = new Synapse(random);
+            SynapsesAmount = isInputLayer(LayerType) ? 1 : SynapsesAmount;
             for (int i = 0; i < SynapsesAmount; i++)
-                Synapses.Add(new Synapse(isInputLayer));
+                Synapses.Add(new Synapse(random, isInputLayer(LayerType)));
             Axon = new Axon();
         }
 
-        public double Run(LinkedList<double> signals)
+        //
+        public void Run(LinkedList<double> signals)
         {
-            if (isInputLayer)
+            if (isInputLayer(LayerType))
                 RunInput(signals.First.Value);
             else
                 RunNeuron(signals);
-            return Axon.signal;
+
+            Axon.activatedSignal = ActivationFunction(Axon.signal);
         }
 
+        //
         public void RunInput(double signal)
         {
-            Axon.signal = Synapses[0].Run(signal);
+            Axon.signal = Synapses[0].Run(signal);  
         }
 
+        //
         public void RunNeuron(LinkedList<double> signals)
         {
             int i = 0;
@@ -49,6 +62,15 @@ namespace NeuralNetworkOnPaper.BrainModel
                 Axon.signal += Synapses[i++].Run(signal);
             }
             Axon.signal += Bias.Run(1);
+        }
+
+        //
+        public virtual double ActivationFunction(double sum) // means basic Threshold Device
+        {
+            if (sum > 0)
+                return 1;
+            else
+                return -1;
         }
     }
 }

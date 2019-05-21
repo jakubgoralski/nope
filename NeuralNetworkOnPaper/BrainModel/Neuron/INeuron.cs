@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using NeuralNetworkOnPaper.BrainModel;
+using System;
+using System.Collections.Generic;
+using static NeuralNetworkOnPaper.Config;
 
-namespace NeuralNetworkOnPaper.BrainModel
+namespace NeuralNetworkOnPaper
 {
     public interface INeuron
     {
@@ -22,9 +25,12 @@ namespace NeuralNetworkOnPaper.BrainModel
          */
 
         //
-        void Configure(int synapsesAmount, bool isNeuronInInputLayer = false);
+        void Configure(int synapsesAmount, layerType layerType, Random random);
 
         //
-        double Run(LinkedList<double> signals);
+        void Run(LinkedList<double> signals);
+
+        //
+        double ActivationFunction(double sum);
     }
 }
