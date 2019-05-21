@@ -1,7 +1,8 @@
-﻿using NeuralNetworkOnPaper.BrainModel.Layer;
+﻿using NeuralNetworkOnPaper.ArtificalBrain;
+using System;
 using System.Collections.Generic;
 
-namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
+namespace NeuralNetworkOnPaper
 {
     //consider if not delete this class
     class LayerMadaline : Layer
@@ -24,15 +25,16 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
         }
 
         //
-        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, bool isInputLayer)
+        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, layerType layerType)
         {
-            IsInputLayer = isInputLayer;
-            base.Configure(false);
+            LayerType = layerType;
+            base.Configure(LayerType);
             neurons = new List<NeuronAdaline>();
+            Random random = new Random();
             for (int i = 0; i < neuronsAmount; i++)
             {
                 NeuronAdaline neuron = new NeuronAdaline();
-                neuron.Configure(previousLayerNeuronsAmount, IsInputLayer);
+                neuron.Configure(previousLayerNeuronsAmount, LayerType, random);
                 neurons.Add(neuron);
             }
         }
@@ -43,34 +45,54 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
             DataSetInput = dataSet;
             DataSetOutput.Clear();
 
-            foreach (NeuronAdaline neuron in neurons)
+            if (isInputLayer(LayerType))
             {
-                neuron.Run(DataSetInput);
-                DataSetOutput.AddLast(neuron.Axon.signal);
+                int i = 0;
+                foreach (double data in dataSet)
+                {
+                    LinkedList<double> temp = new LinkedList<double>();
+                    temp.AddFirst(data);
+                    neurons[i].Run(temp);
+                    DataSetOutput.AddLast(neurons[i++].Axon.activatedSignal);
+                }
             }
+            else
+                foreach (NeuronAdaline neuron in neurons)
+                {
+                    neuron.Run(DataSetInput);
+                    DataSetOutput.AddLast(neuron.Axon.activatedSignal);
+                }
 
             return DataSetOutput;
         }
 
-        //
-        public void Delta()
-        {
-        }
-
-        //
-        public void Delta(LinkedList<double> resultSet)
+        // use to learn output layer
+        public void Delta(LinkedList<double> expectedResults)
         {
             foreach (NeuronAdaline neuron in neurons)
             {
-                neuron.Delta(resultSet.First.Value);
-                resultSet.RemoveFirst();
+                neuron.error = Math.Pow(expectedResults.First.Value - neuron.Axon.signal,2)/2; // objective function: error = expected result - given result
+                expectedResults.RemoveFirst();
+                neuron.Delta();
             }
         }
 
-        //
-        public void ComputeError(LayerMadaline outputLayer)
+        // use to learn hidden layer
+        public void Delta(LinkedList<NeuronAdaline> outputLayer)
         {
-
+            int i = 0;
+            foreach (NeuronAdaline neuron in neurons)
+            {
+                // compute error
+                neuron.error = 0;
+                foreach(NeuronAdaline neuronOutput in outputLayer)
+                {
+                    neuron.error += neuronOutput.Synapses[i].weight * neuronOutput.error;
+                }
+                i++;
+                //compute new wages
+                neuron.Delta();
+            }
         }
     }
 }

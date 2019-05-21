@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using static NeuralNetworkOnPaper.Config;
 
-namespace NeuralNetworkOnPaper.BrainModel.Layer
+namespace NeuralNetworkOnPaper
 {
     interface ILayer
     {
@@ -9,19 +10,19 @@ namespace NeuralNetworkOnPaper.BrainModel.Layer
          */
 
         //
+        layerType LayerType { get; set; }
+
+        //
         LinkedList<double> DataSetInput { get; set; }
 
         //
         LinkedList<double> DataSetOutput { get; set; }
-
-        //
-        bool IsInputLayer { get; set; }
 
         /*
          * METHODS
          */
 
         //
-        void Configure(bool isInputLayer);
+        void Configure(layerType layerType);
     }
 }

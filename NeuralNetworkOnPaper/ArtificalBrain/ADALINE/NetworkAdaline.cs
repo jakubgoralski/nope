@@ -41,7 +41,7 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
                 var data = dataSet.Zip(resultSet, (n, w) => new { dataSet = n, resultSet = w });
                 foreach (var row in data)
                 {
-                    Examine(row.dataSet);
+                    Examine(new LinkedList<double>(row.dataSet));
                     layer.Delta(new LinkedList<double>(row.resultSet));
                 }
             }

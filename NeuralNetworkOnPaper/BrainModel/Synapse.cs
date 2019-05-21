@@ -1,4 +1,5 @@
 ﻿using NeuralNetworkOnPaper.BrainBooster;
+using System;
 
 namespace NeuralNetworkOnPaper
 {
@@ -9,10 +10,10 @@ namespace NeuralNetworkOnPaper
         public double signalOutput { get; set; }
         public bool isInputLayer { get; set; }
 
-        public Synapse(bool isSynapseInNeuronInInputLayer = false)
+        public Synapse(Random random, bool isSynapseInNeuronInInputLayer = false)
         {
             isInputLayer = isSynapseInNeuronInInputLayer;
-            weight = isInputLayer ? 1 : Startup.getInitialSynapseWeight();
+            weight = isInputLayer ? 1 : Startup.getInitialSynapseWeight(random);
             signalInput = 0;
             signalOutput = 0;
         }

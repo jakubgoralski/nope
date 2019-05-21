@@ -1,5 +1,4 @@
 ﻿using NeuralNetworkOnPaper.BrainModel;
-using NeuralNetworkOnPaper.BrainModel.Layer;
 
 namespace NeuralNetworkOnPaper.ArtificalBrain
 {
@@ -8,8 +7,6 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
         /*
          * PROPERTIES
          */
-
-        private Layer layer { get; set; }
 
         /*
          * METHODS
@@ -22,9 +19,8 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
         }
 
         //
-        public void Delta(double expectedResult)
+        public void Delta()
         {
-            error = expectedResult - Axon.signal;
             foreach (Synapse synapse in Synapses)
             {
                 synapse.weight = synapse.weight + learningRate * error * synapse.signalInput;

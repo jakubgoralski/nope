@@ -1,4 +1,4 @@
-﻿using NeuralNetworkOnPaper.BrainModel.Layer;
+﻿using System;
 using System.Collections.Generic;
 
 namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
@@ -27,10 +27,11 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
         {
             base.Configure();
             neurons = new List<NeuronAdaline>();
+            Random random = new Random();
             for (int i = 0; i < neuronsAmount; i++)
             {
                 NeuronAdaline neuron = new NeuronAdaline();
-                neuron.Configure(previousLayerNeuronsAmount);
+                neuron.Configure(previousLayerNeuronsAmount, layerType.Output, random);
                 neurons.Add(neuron);
             }
         }
@@ -51,12 +52,15 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
         }
 
         //
-        public void Delta(LinkedList<double> resultSet)
+        public void Delta(LinkedList<double> expectedResults)
         {
             foreach (NeuronAdaline neuron in neurons)
             {
-                neuron.Delta(resultSet.First.Value);
-                resultSet.RemoveFirst();
+                //compute error
+                neuron.error = expectedResults.First.Value - neuron.Axon.signal; // objective function: error = expected result - given result
+                expectedResults.RemoveFirst();
+                //compute new wages
+                neuron.Delta();
             }
         }
     }
