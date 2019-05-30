@@ -14,9 +14,9 @@
         {
             foreach (Synapse synapse in Synapses)
             {
-                synapse.weight = synapse.weight + learningRate * error * synapse.signalInput;
+                synapse.Weight = synapse.Weight + learningRate * Error * synapse.SignalInput;
             }
-            Bias.weight = Bias.weight + learningRate * error;
+            Bias.Weight = Bias.Weight + learningRate * Error;
         }
     }
 }

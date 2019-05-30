@@ -5,15 +5,23 @@ namespace NeuralNetworkOnPaper.BrainBooster
 {
     public class Learn : Config
     {
-        public List<LinkedList<double>> examineDataSet;
+        /*
+         * 
+         * PROPERTIES
+         * 
+         */
+
+        // Helps to generate real random values to improve FY Shuffle algorithm performance
         private Random random = new Random();
 
-        public void LearnLayer()
-        {
+        /*
+         * 
+         * METHODS
+         * 
+         */
 
-        }
-
-        public void Shuffle(ref List<LinkedList<double>> dataSet, ref List<LinkedList<double>> resultSet) // Fisher-Yates shuffle algorithm
+        // Returns shuffled list of signals to improve learning performance. Inside use mathematical 'Fisher-Yates' shuffle algorithm
+        public void Shuffle(ref List<LinkedList<double>> dataSet, ref List<LinkedList<double>> resultSet) 
         {
             int n = dataSet.Count;
             LinkedList<double> tempData;
@@ -35,23 +43,24 @@ namespace NeuralNetworkOnPaper.BrainBooster
             }
         }
 
-        public double CostFunction(LinkedList<double> expectedResult, LinkedList<double> givenResult) // objective function
-        {
-            double expected, given, sum = 0;
-            int n = expectedResult.Count;
+        ////
+        //public double ComputeError(LinkedList<double> expectedResult, LinkedList<double> givenResult)
+        //{
+        //    double expected, given, sum = 0;
+        //    int n = expectedResult.Count;
 
-            for (int i = 0; i < n; i++)
-            {
-                expected = expectedResult.First.Value;
-                given = givenResult.First.Value;
+        //    for (int i = 0; i < n; i++)
+        //    {
+        //        expected = expectedResult.First.Value;
+        //        given = givenResult.First.Value;
 
-                expectedResult.RemoveFirst();
-                givenResult.RemoveFirst();
+        //        expectedResult.RemoveFirst();
+        //        givenResult.RemoveFirst();
 
-                sum += Math.Pow(expected - given, 2);
-            }
+        //        sum += Math.Pow(expected - given, 2);
+        //    }
 
-            return sum / 2;
-        }
+        //    return sum / 2;
+        //}
     }
 }

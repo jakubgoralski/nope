@@ -30,7 +30,7 @@ namespace NeuralNetworkOnPaper
         {
             int i = 0;
             layers = new List<LayerMadaline>();
-            foreach (layerType type in Enum.GetValues(typeof(layerType)))
+            foreach (LayerType type in Enum.GetValues(typeof(LayerType)))
             {
                 LayerMadaline layer = new LayerMadaline();
                 layer.Configure(neuronsAmount[i],
@@ -42,7 +42,7 @@ namespace NeuralNetworkOnPaper
         }
 
         //
-        public void Learn(List<LinkedList<double>> dataSet, List<LinkedList<double>> expectedResult, int epochAmount, learningMethod method)
+        public void Learn(List<LinkedList<double>> dataSet, List<LinkedList<double>> expectedResult, int epochAmount, LearningMethod method)
         {
             int iteration = 0;
             do
@@ -56,7 +56,7 @@ namespace NeuralNetworkOnPaper
                     Backpropagation(row.expectedResult); //online method of backpropagation
                 }
 
-                if (iteration > 5 && 0.5 > layers.Last().neurons.Last().error)
+                if (iteration > 5 && 0.5 > layers.Last().neurons.Last().Error)
                     break;
 
                 if (iteration++ > epochAmount)
@@ -104,7 +104,7 @@ namespace NeuralNetworkOnPaper
                     int j = 1;
                     foreach(Synapse synapse in neuron.Synapses)
                     {
-                        Console.WriteLine($"synapse no {j++}: I {synapse.signalInput.ToString()} W: {synapse.weight.ToString()} ");
+                        Console.WriteLine($"synapse no {j++}: I {synapse.SignalInput.ToString()} W: {synapse.Weight.ToString()} ");
                     }
                     Console.WriteLine($"| O {neuron.Axon.signal.ToString()} AO: {neuron.Axon.activatedSignal.ToString()}");
 

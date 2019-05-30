@@ -6,23 +6,27 @@ namespace NeuralNetworkOnPaper
     interface ILayer
     {
         /*
+         * 
          * PROPERTIES
+         * 
          */
 
-        //
-        layerType LayerType { get; set; }
+        // Informs what type layer is
+        LayerType LayerType { get; set; }
 
-        //
+        // Contains list of received values from previous layer or from data set if it's input layer
         LinkedList<double> DataSetInput { get; set; }
 
-        //
+        // Contains list of computed values in this layer
         LinkedList<double> DataSetOutput { get; set; }
 
         /*
+         * 
          * METHODS
+         * 
          */
 
-        //
-        void Configure(layerType layerType);
+        // As base set up type of layer, as new set up list of neurons
+        void Configure(LayerType layerType);
     }
 }

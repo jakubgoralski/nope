@@ -25,7 +25,7 @@ namespace NeuralNetworkOnPaper
         }
 
         //
-        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, layerType layerType)
+        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, LayerType layerType)
         {
             LayerType = layerType;
             base.Configure(LayerType);
@@ -45,7 +45,7 @@ namespace NeuralNetworkOnPaper
             DataSetInput = dataSet;
             DataSetOutput.Clear();
 
-            if (isInputLayer(LayerType))
+            if (IsInputLayer(LayerType))
             {
                 int i = 0;
                 foreach (double data in dataSet)
@@ -71,7 +71,7 @@ namespace NeuralNetworkOnPaper
         {
             foreach (NeuronAdaline neuron in neurons)
             {
-                neuron.error = Math.Pow(expectedResults.First.Value - neuron.Axon.signal,2)/2; // objective function: error = expected result - given result
+                neuron.Error = Math.Pow(expectedResults.First.Value - neuron.Axon.signal,2)/2; // objective function: error = expected result - given result
                 expectedResults.RemoveFirst();
                 neuron.Delta();
             }
@@ -84,10 +84,10 @@ namespace NeuralNetworkOnPaper
             foreach (NeuronAdaline neuron in neurons)
             {
                 // compute error
-                neuron.error = 0;
+                neuron.Error = 0;
                 foreach(NeuronAdaline neuronOutput in outputLayer)
                 {
-                    neuron.error += neuronOutput.Synapses[i].weight * neuronOutput.error;
+                    neuron.Error += neuronOutput.Synapses[i].Weight * neuronOutput.Error;
                 }
                 i++;
                 //compute new wages

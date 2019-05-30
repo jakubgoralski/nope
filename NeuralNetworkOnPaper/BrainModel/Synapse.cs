@@ -1,31 +1,44 @@
-﻿using NeuralNetworkOnPaper.BrainBooster;
-using System;
+﻿using System;
 
 namespace NeuralNetworkOnPaper
 {
-    public class Synapse
+    public class Synapse : Config
     {
-        public double weight { get; set; }
-        public double signalInput { get; set; }
-        public double signalOutput { get; set; }
-        public bool isInputLayer { get; set; }
+        /*
+         * 
+         * PROPERTIES
+         * 
+         */
 
-        public Synapse(Random random, bool isSynapseInNeuronInInputLayer = false)
+        public double Weight { get; set; }
+        public double SignalInput { get; set; }
+        public double SignalOutput { get; set; }
+        public bool IsInInputLayer { get; set; }
+
+        /*
+         * 
+         * METHODS
+         * 
+         */
+
+        // Constructor with configuration
+        public Synapse(Random random, NeuronType neuronType, bool isSynapseInNeuronInInputLayer = false)
         {
-            isInputLayer = isSynapseInNeuronInInputLayer;
-            weight = isInputLayer ? 1 : Startup.getInitialSynapseWeight(random);
-            signalInput = 0;
-            signalOutput = 0;
+            IsInInputLayer = isSynapseInNeuronInInputLayer;
+            Weight = IsInInputLayer ? 1 : getInitialSynapseWeight(random, neuronType);
+            SignalInput = 0;
+            SignalOutput = 0;
         }
 
+        // Returns output signal of dendrite
         public double Run(double signal)
         {
-            signalInput = signal;
-            if (isInputLayer)
-                signalOutput = signalInput;
+            SignalInput = signal;
+            if (IsInInputLayer)
+                SignalOutput = SignalInput;
             else
-                signalOutput = signalInput * weight;
-            return signalOutput;
+                SignalOutput = SignalInput * Weight;
+            return SignalOutput;
         }
     }
 }

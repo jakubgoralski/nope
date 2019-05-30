@@ -31,7 +31,7 @@ namespace NeuralNetworkOnPaper
             double sum = 0;
             foreach (NeuronSigmoid neuron in layers.Last().neurons)
             {
-                sum += Math.Pow(neuron.error, 2);
+                sum += Math.Pow(neuron.Error, 2);
                 WartoscFunkcjiCelu = sum / 2;
             }
         }
@@ -41,7 +41,7 @@ namespace NeuralNetworkOnPaper
         {
             int i = 0;
             layers = new List<LayerSigmoid>();
-            foreach (layerType type in Enum.GetValues(typeof(layerType)))
+            foreach (LayerType type in Enum.GetValues(typeof(LayerType)))
             {
                 LayerSigmoid layer = new LayerSigmoid();
                 layer.Configure(neuronsAmount[i],
@@ -53,7 +53,7 @@ namespace NeuralNetworkOnPaper
         }
 
         //
-        public void Learn(List<LinkedList<double>> dataSet, List<LinkedList<double>> expectedResult, int epochAmount, learningMethod method)
+        public void Learn(List<LinkedList<double>> dataSet, List<LinkedList<double>> expectedResult, int epochAmount, LearningMethod method)
         {
             int iteration = 0;
             do
@@ -115,10 +115,10 @@ namespace NeuralNetworkOnPaper
                     int j = 1;
                     foreach(Synapse synapse in neuron.Synapses)
                     {
-                        Console.WriteLine($"synapse no {j++}: I {synapse.signalInput.ToString()} W: {synapse.weight.ToString()} ");
+                        Console.WriteLine($"synapse no {j++}: I {synapse.SignalInput.ToString()} W: {synapse.Weight.ToString()} ");
                     }
-                    if(! isInputLayer(layer.LayerType))
-                        Console.WriteLine($"BIAS: I {neuron.Bias.signalInput.ToString()} W: {neuron.Bias.weight.ToString()} ");
+                    if(! IsInputLayer(layer.LayerType))
+                        Console.WriteLine($"BIAS: I {neuron.Bias.SignalInput.ToString()} W: {neuron.Bias.Weight.ToString()} ");
 
                     Console.WriteLine($"| O {neuron.Axon.signal.ToString()} AO: {neuron.Axon.activatedSignal.ToString()}");
 

@@ -8,29 +8,36 @@ namespace NeuralNetworkOnPaper
     public interface INeuron
     {
         /*
+         * 
          * PROPERTIES
+         * 
          */
 
-        //
+        // Informs which type neuron is
+        NeuronType NeuronType { get; set; }
+
+        // Represents inputs of neuron with wages
         List<Synapse> Synapses { get; set; }
 
-        //
+        // Is using as one synapse to move activation function in a chart
         Synapse Bias { get; set; }
 
-        //
+        // Represents one output of neuron
         Axon Axon { get; set; }
 
         /*
+         * 
          * METHODS
+         * 
          */
 
-        //
-        void Configure(int synapsesAmount, layerType layerType, Random random);
+        // Sets up all inputs, outputs and other settings of this neuron
+        void Configure(int synapsesAmount, LayerType layerType, Random random, NeuronType neuronType);
 
-        //
+        // Returns calculation of activation function of this neuron
         void Run(LinkedList<double> signals);
 
-        //
+        // Returns output signal from last neuron block
         double ActivationFunction(double sum);
     }
 }

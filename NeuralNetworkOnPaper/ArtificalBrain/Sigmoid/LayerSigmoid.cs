@@ -8,14 +8,18 @@ namespace NeuralNetworkOnPaper
     class LayerSigmoid : Layer
     {
         /*
+         * 
          * PROPERTIES
+         * 
          */
 
         //
         public List<NeuronSigmoid> neurons { get; set; }
 
         /*
+         * 
          * METHODS
+         * 
          */
 
         //
@@ -25,7 +29,7 @@ namespace NeuralNetworkOnPaper
         }
 
         //
-        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, layerType layerType)
+        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, LayerType layerType)
         {
             LayerType = layerType;
             base.Configure(LayerType);
@@ -45,7 +49,7 @@ namespace NeuralNetworkOnPaper
             DataSetInput = dataSet;
             DataSetOutput.Clear();
 
-            if (isInputLayer(LayerType))
+            if (IsInputLayer(LayerType))
             {
                 int i = 0;
                 foreach (double data in dataSet)
@@ -71,7 +75,7 @@ namespace NeuralNetworkOnPaper
         {
             foreach (NeuronSigmoid neuron in neurons)
             {
-                neuron.error = expectedResults.First.Value - neuron.Axon.activatedSignal;
+                neuron.Error = expectedResults.First.Value - neuron.Axon.activatedSignal;
                 expectedResults.RemoveFirst();
             }
         }
@@ -83,12 +87,12 @@ namespace NeuralNetworkOnPaper
             foreach (NeuronSigmoid neuron in neurons)
             {
                 // compute error
-                neuron.error = 0;
+                neuron.Error = 0;
                 foreach (NeuronSigmoid neuronOutput in outputLayer)
                 {
-                    neuron.error += neuronOutput.Synapses[i].weight * neuronOutput.error;
+                    neuron.Error += neuronOutput.Synapses[i].Weight * neuronOutput.Error;
                 }
-                neuron.error = neuron.error * neuron.Axon.activatedSignal;
+                neuron.Error = neuron.Error * neuron.Axon.activatedSignal;
                 i++;
             }
         }
@@ -99,7 +103,7 @@ namespace NeuralNetworkOnPaper
             int i = 0;
             foreach (NeuronSigmoid neuron in neurons)
             {
-                neuron.error = neuron.error * (neuron.Axon.activatedSignal * (1.0 - neuron.Axon.activatedSignal));
+                neuron.Error = neuron.Error * (neuron.Axon.activatedSignal * (1.0 - neuron.Axon.activatedSignal));
                 i++;
                 //compute new wages
                 neuron.ChangeWages();

@@ -49,7 +49,6 @@
     <Compile Include="ArtificalBrain\Sigmoid\NetworkSigmoid.cs" />
     <Compile Include="ArtificalBrain\Sigmoid\NeuronSigmoid.cs" />
     <Compile Include="BrainBooster\Learn.cs" />
-    <Compile Include="BrainBooster\Startup.cs" />
     <Compile Include="BrainModel\Axon.cs" />
     <Compile Include="BrainModel\Layer\ILayer.cs" />
     <Compile Include="BrainModel\Neuron\INeuron.cs" />

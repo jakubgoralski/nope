@@ -31,7 +31,7 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
             for (int i = 0; i < neuronsAmount; i++)
             {
                 NeuronAdaline neuron = new NeuronAdaline();
-                neuron.Configure(previousLayerNeuronsAmount, layerType.Output, random);
+                neuron.Configure(previousLayerNeuronsAmount, LayerType.Output, random);
                 neurons.Add(neuron);
             }
         }
@@ -57,7 +57,7 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
             foreach (NeuronAdaline neuron in neurons)
             {
                 //compute error
-                neuron.error = expectedResults.First.Value - neuron.Axon.signal; // objective function: error = expected result - given result
+                neuron.Error = expectedResults.First.Value - neuron.Axon.signal; // objective function: error = expected result - given result
                 expectedResults.RemoveFirst();
                 //compute new wages
                 neuron.Delta();
