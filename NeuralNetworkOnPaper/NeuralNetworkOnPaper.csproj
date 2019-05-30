@@ -45,6 +45,9 @@
     <Compile Include="ArtificalBrain\MADALINE\LayerMadaline.cs" />
     <Compile Include="ArtificalBrain\ADALINE\NeuronAdaline.cs" />
     <Compile Include="ArtificalBrain\MADALINE\NetworkMadaline.cs" />
+    <Compile Include="ArtificalBrain\Sigmoid\LayerSigmoid.cs" />
+    <Compile Include="ArtificalBrain\Sigmoid\NetworkSigmoid.cs" />
+    <Compile Include="ArtificalBrain\Sigmoid\NeuronSigmoid.cs" />
     <Compile Include="BrainBooster\Learn.cs" />
     <Compile Include="BrainBooster\Startup.cs" />
     <Compile Include="BrainModel\Axon.cs" />

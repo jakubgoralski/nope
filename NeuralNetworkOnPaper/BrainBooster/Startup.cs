@@ -6,7 +6,7 @@ namespace NeuralNetworkOnPaper.BrainBooster
     {
         public static double getInitialSynapseWeight(Random random)
         {                
-            return 10*(random.NextDouble() * (synapseInitialWeightRange - (synapseInitialWeightRange * -1)) + (synapseInitialWeightRange * -1));
+            return (random.NextDouble() * (0.9 - 0.1) + 0.1);
         }
     }
 }

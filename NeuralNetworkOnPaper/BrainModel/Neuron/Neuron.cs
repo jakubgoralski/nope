@@ -65,12 +65,23 @@ namespace NeuralNetworkOnPaper
         }
 
         //
-        public virtual double ActivationFunction(double sum) // means basic Threshold Device
+        //public virtual double ActivationFunction(double sum) // means basic Threshold Device
+        //{
+        //    if (sum > 0)
+        //        return 1;
+        //    else
+        //        return -1;
+        //}
+
+        //
+        public virtual double ActivationFunction(double sum) // means tangens hiperbolic
         {
-            if (sum > 0)
-                return 1;
-            else
-                return -1;
+            //1 / (1 + e ^ (-activation))
+                return 1.0 / (1.0 + Math.Pow(Math.E, -1 * sum));
+            /*
+            double eBs = Math.Pow(Math.E, sum);
+            double emBs = Math.Pow(Math.E, -1 * sum);
+            return (eBs - emBs) / (eBs + emBs);*/
         }
     }
 }

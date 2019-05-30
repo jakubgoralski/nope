@@ -23,9 +23,9 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
         {
             foreach (Synapse synapse in Synapses)
             {
-                synapse.weight = synapse.weight + learningRate * error * synapse.signalInput;
+                synapse.weight = synapse.weight - learningRate * error * synapse.signalInput;
             }
-            Bias.weight = Bias.weight + learningRate * error;
+            Bias.weight = Bias.weight - learningRate * error;
         }
     }
 }
