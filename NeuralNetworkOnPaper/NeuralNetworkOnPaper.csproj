@@ -54,7 +54,7 @@
     <Compile Include="BrainModel\Neuron\INeuron.cs" />
     <Compile Include="BrainModel\Layer\Layer.cs" />
     <Compile Include="BrainModel\Neuron\Neuron.cs" />
-    <Compile Include="BrainModel\Synapse.cs" />
+    <Compile Include="BrainModel\Dendrite.cs" />
     <Compile Include="BrainBooster\Config.cs" />
   </ItemGroup>
   <ItemGroup>

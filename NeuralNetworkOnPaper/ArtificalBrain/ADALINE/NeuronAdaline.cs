@@ -21,7 +21,7 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
         //
         public void Delta()
         {
-            foreach (Synapse synapse in Synapses)
+            foreach (Dendrite synapse in Dendrites)
             {
                 synapse.Weight = synapse.Weight - learningRate * Error * synapse.SignalInput;
             }

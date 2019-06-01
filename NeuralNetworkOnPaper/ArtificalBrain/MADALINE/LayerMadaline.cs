@@ -87,7 +87,7 @@ namespace NeuralNetworkOnPaper
                 neuron.Error = 0;
                 foreach(NeuronAdaline neuronOutput in outputLayer)
                 {
-                    neuron.Error += neuronOutput.Synapses[i].Weight * neuronOutput.Error;
+                    neuron.Error += neuronOutput.Dendrites[i].Weight * neuronOutput.Error;
                 }
                 i++;
                 //compute new wages

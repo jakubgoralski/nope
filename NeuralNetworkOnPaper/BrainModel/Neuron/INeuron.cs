@@ -17,10 +17,10 @@ namespace NeuralNetworkOnPaper
         NeuronType NeuronType { get; set; }
 
         // Represents inputs of neuron with wages
-        List<Synapse> Synapses { get; set; }
+        List<Dendrite> Dendrites { get; set; }
 
         // Is using as one synapse to move activation function in a chart
-        Synapse Bias { get; set; }
+        Dendrite Bias { get; set; }
 
         // Represents one output of neuron
         Axon Axon { get; set; }
@@ -32,7 +32,7 @@ namespace NeuralNetworkOnPaper
          */
 
         // Sets up all inputs, outputs and other settings of this neuron
-        void Configure(int synapsesAmount, LayerType layerType, Random random, NeuronType neuronType);
+        void Configure(int dendritesAmount, LayerType layerType, Random random, NeuronType neuronType);
 
         // Returns calculation of activation function of this neuron
         void Run(LinkedList<double> signals);

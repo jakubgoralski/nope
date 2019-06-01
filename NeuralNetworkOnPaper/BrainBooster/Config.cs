@@ -11,13 +11,16 @@ namespace NeuralNetworkOnPaper
          */
 
         // If neuron is unipolar then it's range from 0.001 to this value, if bipolar then real range is from -value to +value
-        public const double synapseInitialWeightRange = 0.1; 
+        public const double dendriteInitialWeightRange = 0.1; 
 
         // Defines how big changes of wages can be made during learning process
         public const double learningRate = 0.1;
 
         // It's a parameter to  count a momentum
         public const double alpha = 0.9;
+
+        // If epoch amount is not defined then learning algoritm run untill error is less than this value
+        public const double permittedError = 0.00000001;
 
         // Implemented types of learning neural networks
         public enum LearningMethod
@@ -49,12 +52,12 @@ namespace NeuralNetworkOnPaper
          */
 
         // Returns random weight depending on range and neuron type
-        public double getInitialSynapseWeight(Random random, NeuronType neuronType = NeuronType.Bipolar)
+        public double getInitialDendriteWeight(Random random, NeuronType neuronType = NeuronType.Bipolar)
         {
             if(IsUnipolar(neuronType))
-                return (random.NextDouble() * (synapseInitialWeightRange - 0.001) + 0.001);
+                return (random.NextDouble() * (dendriteInitialWeightRange - 0.001) + 0.001);
             else
-                return (random.NextDouble() * (synapseInitialWeightRange + synapseInitialWeightRange) + synapseInitialWeightRange);
+                return (random.NextDouble() * (dendriteInitialWeightRange + dendriteInitialWeightRange) + dendriteInitialWeightRange);
         }
 
         // Returns true if this layer is input
@@ -75,6 +78,7 @@ namespace NeuralNetworkOnPaper
             return neuronType == NeuronType.Unipolar;
         }
 
+        // Returns type of layer given in position order
         public LayerType GetLayerType(int currentLayerNumber, int layersAmount)
         {
             if (currentLayerNumber == 0)
@@ -83,6 +87,18 @@ namespace NeuralNetworkOnPaper
                 return LayerType.Output;
             else
                 return LayerType.Hidden;
+        }
+
+        // Returns true if method is online
+        public bool IsOnline(LearningMethod learningMethod)
+        {
+            return learningMethod == LearningMethod.BackpropagationOnline;
+        }
+
+        // Returns true if method is offline
+        public bool IsOffline(LearningMethod learningMethod)
+        {
+            return learningMethod == LearningMethod.BackpropagationOffline;
         }
     }
 }

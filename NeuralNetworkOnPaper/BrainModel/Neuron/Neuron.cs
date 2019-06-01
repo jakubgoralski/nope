@@ -14,8 +14,8 @@ namespace NeuralNetworkOnPaper
 
         public new LayerType LayerType { get; set; }
         public new NeuronType NeuronType { get; set; }
-        public List<Synapse> Synapses { get; set; }
-        public Synapse Bias { get; set; }
+        public List<Dendrite> Dendrites { get; set; }
+        public Dendrite Bias { get; set; }
         public Axon Axon { get; set; }
         public double Error { get; set; }
 
@@ -31,16 +31,16 @@ namespace NeuralNetworkOnPaper
 
         }
 
-        public void Configure(int SynapsesAmount, LayerType layerType, Random random, NeuronType neuronType = NeuronType.Bipolar)
+        public void Configure(int dendritesAmount, LayerType layerType, Random random, NeuronType neuronType = NeuronType.Bipolar)
         {
             NeuronType = neuronType;
             LayerType = layerType;
-            Synapses = new List<Synapse>();
+            Dendrites = new List<Dendrite>();
             if (! IsInputLayer(layerType))
-                Bias = new Synapse(random, neuronType);
-            SynapsesAmount = IsInputLayer(LayerType) ? 1 : SynapsesAmount;
-            for (int i = 0; i < SynapsesAmount; i++)
-                Synapses.Add(new Synapse(random, neuronType, IsInputLayer(LayerType)));
+                Bias = new Dendrite(random, neuronType);
+            dendritesAmount = IsInputLayer(LayerType) ? 1 : dendritesAmount;
+            for (int i = 0; i < dendritesAmount; i++)
+                Dendrites.Add(new Dendrite(random, neuronType, IsInputLayer(LayerType)));
             Axon = new Axon();
         }
 
@@ -56,7 +56,7 @@ namespace NeuralNetworkOnPaper
 
         public void RunInput(double signal)
         {
-            Axon.signal = Synapses[0].Run(signal);  
+            Axon.signal = Dendrites[0].Run(signal);  
         }
 
         public void RunNeuron(LinkedList<double> signals)
@@ -65,7 +65,7 @@ namespace NeuralNetworkOnPaper
             Axon.signal = 0;
             foreach(double signal in signals)
             {
-                Axon.signal += Synapses[i++].Run(signal);
+                Axon.signal += Dendrites[i++].Run(signal);
             }
             Axon.signal += Bias.Run(1);
         }

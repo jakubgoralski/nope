@@ -90,7 +90,7 @@ namespace NeuralNetworkOnPaper
                 neuron.Error = 0;
                 foreach (NeuronSigmoid neuronOutput in outputLayer)
                 {
-                    neuron.Error += neuronOutput.Synapses[i].Weight * neuronOutput.Error;
+                    neuron.Error += neuronOutput.Dendrites[i].Weight * neuronOutput.Error;
                 }
                 neuron.Error = neuron.Error * neuron.Axon.activatedSignal;
                 i++;
@@ -108,6 +108,18 @@ namespace NeuralNetworkOnPaper
                 //compute new wages
                 neuron.ChangeWages();
             }
+        }
+
+        //
+        public double ObjectiveFunction()
+        {
+            double sum = 0;
+            foreach (NeuronSigmoid neuron in neurons)
+            {
+                sum += Math.Pow(neuron.Error, 2);
+            }
+
+            return sum / 2;
         }
     }
 }

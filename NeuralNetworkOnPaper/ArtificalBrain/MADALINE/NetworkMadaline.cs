@@ -102,7 +102,7 @@ namespace NeuralNetworkOnPaper
                 {
                     Console.Write($"neuron no {i++}: ");
                     int j = 1;
-                    foreach(Synapse synapse in neuron.Synapses)
+                    foreach(Dendrite synapse in neuron.Dendrites)
                     {
                         Console.WriteLine($"synapse no {j++}: I {synapse.SignalInput.ToString()} W: {synapse.Weight.ToString()} ");
                     }

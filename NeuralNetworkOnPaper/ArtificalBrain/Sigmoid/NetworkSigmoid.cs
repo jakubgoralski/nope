@@ -15,7 +15,7 @@ namespace NeuralNetworkOnPaper
          */
 
         // List of 1 * input, n * hiddens, 1 * output layers
-        private List<LayerSigmoid> layers { get; set; }
+        private List<LayerSigmoid> Layers { get; set; }
 
         /*
          * 
@@ -32,7 +32,7 @@ namespace NeuralNetworkOnPaper
         // Configuration, i.e. creation of new layers, neurons, dendrites and axons
         public void Configure(int[] neuronsAmount)
         {
-            layers = new List<LayerSigmoid>();
+            Layers = new List<LayerSigmoid>();
 
             for (int i = 0; i < neuronsAmount.Length; i++)
             {
@@ -40,52 +40,95 @@ namespace NeuralNetworkOnPaper
                 layer.Configure(neuronsAmount[i],
                                 i == 0 ? 1 : neuronsAmount[i - 1],
                                 GetLayerType(i, neuronsAmount.Length));
-                layers.Add(layer);
+                Layers.Add(layer);
             }
         }
 
         //
-        public void Learn(List<LinkedList<double>> dataSet, List<LinkedList<double>> expectedResult, int epochAmount, LearningMethod method)
+        public void Learn(List<LinkedList<double>> dataSet, List<LinkedList<double>> expectedResult, int epochAmount = -1, LearningMethod method = LearningMethod.BackpropagationOnline, bool verbose = false)
         {
             int iteration = 0;
+
+            bool errorCondition = false;
+            if (epochAmount < 1)
+            {
+                errorCondition = true;
+                epochAmount = 0;
+            }
+
             do
             {
+                // Stop learning condition
+                if (errorCondition)
+                {
+                    if (iteration++ != 0 && Layers.Last().ObjectiveFunction() < permittedError)
+                        break;
+                }
+                else
+                {
+                    if (iteration++ > epochAmount)
+                        break;
+                }
+
                 Shuffle(ref dataSet, ref expectedResult);
 
                 var data = dataSet.Zip(expectedResult, (n, w) => new { dataSet = n, expectedResult = w });
                 foreach (var row in data)
                 {
                     Examine(new LinkedList<double>(row.dataSet));
-                    Backpropagation(row.expectedResult); //online method of backpropagation
+
+                    if (IsOnline(method))
+                        Backpropagation(row.expectedResult);
                 }
 
-                if (iteration++ > epochAmount)
-                    break;
-
-
+                if (IsOffline(method))
+                    Backpropagation(expectedResult.Last());
             } while (true);
-            Console.WriteLine($"Epochs: {iteration}");
+
+           // if (verbose)
+                Console.WriteLine($"Epochs number: {iteration}; Objective Function: {Layers.Last().ObjectiveFunction()}");
         }
 
         //
         public LinkedList<double> Examine(LinkedList<double> signals)
         {
-            foreach(LayerSigmoid layer in layers)
+            foreach(LayerSigmoid layer in Layers)
                 signals = layer.Run(new LinkedList<double>(signals));
+
             return signals;
         }
 
         //
-        public void Backpropagation(LinkedList<double> expectedResults)
+        public void Backpropagation(LinkedList<double> expectedResult)
         {
-            layers.Last().ComputeOutputErrors(new LinkedList<double>(expectedResults));
+            Layers.Reverse(); // from end to beginning
 
+            // Step 1: Count errors
+            int i = 0; // means current index of output layer
+            foreach (LayerSigmoid layer in Layers)
+            {
+                if (IsInputLayer(layer.LayerType))
+                    break;
 
-            //minimalizacja funkcji celu
-            layers[1].ComputeHiddenErrors(new LinkedList<NeuronSigmoid>(layers.Last().neurons));
+                if (IsOutputLayer(layer.LayerType))
+                {
+                    layer.ComputeOutputErrors(new LinkedList<double>(expectedResult));
+                    continue;
+                }
 
-            layers.Last().Delta();
-            layers[1].Delta();
+                layer.ComputeHiddenErrors(new LinkedList<NeuronSigmoid>(Layers[i++].neurons));
+            }
+
+            // Step 2: Change wages
+            foreach (LayerSigmoid layer in Layers)
+            {
+                if (IsInputLayer(layer.LayerType))
+                    break;
+
+                layer.Delta();
+            }
+
+            Layers.Reverse(); // from beginning to end
         }
 
         //
@@ -94,7 +137,7 @@ namespace NeuralNetworkOnPaper
             Console.WriteLine("+---------------------------------------------------------+");
             Console.WriteLine("|                NETWORK PREVIEW                          |");
             Console.WriteLine("+---------------------------------------------------------+");
-            foreach (LayerSigmoid layer in layers)
+            foreach (LayerSigmoid layer in Layers)
             {
                 Console.WriteLine($"|                    {layer.LayerType.ToString().Substring(0, 2)} LAYER                             |");
                 Console.WriteLine("+---------------------------------------------------------+");
@@ -103,7 +146,7 @@ namespace NeuralNetworkOnPaper
                 {
                     Console.WriteLine($"| Neuron {i++}:                                               |");
                     int j = 1;
-                    foreach(Synapse synapse in neuron.Synapses)
+                    foreach(Dendrite synapse in neuron.Dendrites)
                     {
                         Console.WriteLine($"| Syn. {j++} (I {String.Format("{0:00.000000}", synapse.SignalInput)} W: {String.Format("{0:00.000000}", synapse.Weight)});                      |");
                     }

@@ -2,7 +2,7 @@
 
 namespace NeuralNetworkOnPaper
 {
-    public class Synapse : Config
+    public class Dendrite : Config
     {
         /*
          * 
@@ -10,7 +10,7 @@ namespace NeuralNetworkOnPaper
          * 
          */
 
-        // Current weight of a synapse
+        // Current weight of a dendrite
         public double Weight { get; set; }
         
         // It's used for momentum method
@@ -35,10 +35,10 @@ namespace NeuralNetworkOnPaper
          */
 
         // Constructor with configuration
-        public Synapse(Random random, NeuronType neuronType, bool isSynapseInNeuronInInputLayer = false)
+        public Dendrite(Random random, NeuronType neuronType, bool isSynapseInNeuronInInputLayer = false)
         {
             IsInInputLayer = isSynapseInNeuronInInputLayer;
-            Weight = IsInInputLayer ? 1 : getInitialSynapseWeight(random, neuronType);
+            Weight = IsInInputLayer ? 1 : getInitialDendriteWeight(random, neuronType);
             SignalInput = 0;
             SignalOutput = 0;
         }
