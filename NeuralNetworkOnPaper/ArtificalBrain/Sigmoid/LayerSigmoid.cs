@@ -97,7 +97,7 @@ namespace NeuralNetworkOnPaper
             }
         }
 
-        // use to learn hidden layer
+        //
         public void Delta()
         {
             int i = 0;

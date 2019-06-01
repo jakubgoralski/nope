@@ -9,45 +9,37 @@ namespace NeuralNetworkOnPaper
     public class NetworkSigmoid : Learn
     {
         /*
+         * 
          * PROPERTIES
+         * 
          */
 
-        public double WartoscFunkcjiCelu { get; set; }
-        //
+        // List of 1 * input, n * hiddens, 1 * output layers
         private List<LayerSigmoid> layers { get; set; }
 
         /*
+         * 
          * METHODS
+         * 
          */
 
-        //
+        // Constructor
         public NetworkSigmoid()
         {
 
         }
 
-        public void FunkcjaCelu()
-        {
-            double sum = 0;
-            foreach (NeuronSigmoid neuron in layers.Last().neurons)
-            {
-                sum += Math.Pow(neuron.Error, 2);
-                WartoscFunkcjiCelu = sum / 2;
-            }
-        }
-
-        // 3 layers
+        // Configuration, i.e. creation of new layers, neurons, dendrites and axons
         public void Configure(int[] neuronsAmount)
         {
-            int i = 0;
             layers = new List<LayerSigmoid>();
-            foreach (LayerType type in Enum.GetValues(typeof(LayerType)))
+
+            for (int i = 0; i < neuronsAmount.Length; i++)
             {
                 LayerSigmoid layer = new LayerSigmoid();
                 layer.Configure(neuronsAmount[i],
                                 i == 0 ? 1 : neuronsAmount[i - 1],
-                                type);
-                i++;
+                                GetLayerType(i, neuronsAmount.Length));
                 layers.Add(layer);
             }
         }
@@ -97,34 +89,34 @@ namespace NeuralNetworkOnPaper
         }
 
         //
-        public void RecursiveLastSquares()
-        {
-
-        }
-
-        //
         public void PrintLayers()
         {
+            Console.WriteLine("+---------------------------------------------------------+");
+            Console.WriteLine("|                NETWORK PREVIEW                          |");
+            Console.WriteLine("+---------------------------------------------------------+");
             foreach (LayerSigmoid layer in layers)
             {
-                Console.Write("layer " + layer.LayerType.ToString() + ": ");
+                Console.WriteLine($"|                    {layer.LayerType.ToString().Substring(0, 2)} LAYER                             |");
+                Console.WriteLine("+---------------------------------------------------------+");
                 int i = 1;
                 foreach(NeuronSigmoid neuron in layer.neurons)
                 {
-                    Console.Write($"neuron no {i++}: ");
+                    Console.WriteLine($"| Neuron {i++}:                                               |");
                     int j = 1;
                     foreach(Synapse synapse in neuron.Synapses)
                     {
-                        Console.WriteLine($"synapse no {j++}: I {synapse.SignalInput.ToString()} W: {synapse.Weight.ToString()} ");
+                        Console.WriteLine($"| Syn. {j++} (I {String.Format("{0:00.000000}", synapse.SignalInput)} W: {String.Format("{0:00.000000}", synapse.Weight)});                      |");
                     }
                     if(! IsInputLayer(layer.LayerType))
-                        Console.WriteLine($"BIAS: I {neuron.Bias.SignalInput.ToString()} W: {neuron.Bias.Weight.ToString()} ");
+                        Console.WriteLine($"| Bias (I {String.Format("{0:00.000000}", neuron.Bias.SignalInput)} W: {String.Format("{0:00.000000}", neuron.Bias.Weight)});                        |");
 
-                    Console.WriteLine($"| O {neuron.Axon.signal.ToString()} AO: {neuron.Axon.activatedSignal.ToString()}");
+                    Console.WriteLine($"| Axon (O {String.Format("{0:00.000000}", neuron.Axon.signal)} AO: {String.Format("{0:00.000000}", neuron.Axon.activatedSignal)})                        |");
+                    Console.WriteLine("+---------------------------------------------------------+");
 
                 }
-                Console.WriteLine();
             }
+            Console.WriteLine("|                   END PREVIEW                           |");
+            Console.WriteLine("+---------------------------------------------------------+");
         }
     }
 }

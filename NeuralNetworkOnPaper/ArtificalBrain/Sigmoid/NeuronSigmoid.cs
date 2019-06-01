@@ -14,9 +14,13 @@
         {
             foreach (Synapse synapse in Synapses)
             {
-                synapse.Weight = synapse.Weight + learningRate * Error * synapse.SignalInput;
+                synapse.PenultimateWeight = synapse.Weight;
+                synapse.Weight = synapse.Weight + learningRate * Error * synapse.SignalInput + alpha * (synapse.Weight - synapse.LastWeight);
+                synapse.LastWeight = synapse.PenultimateWeight;
             }
-            Bias.Weight = Bias.Weight + learningRate * Error;
+            Bias.PenultimateWeight = Bias.Weight;
+            Bias.Weight = Bias.Weight + learningRate * Error + alpha * (Bias.Weight - Bias.LastWeight);
+            Bias.LastWeight = Bias.PenultimateWeight;
         }
     }
 }

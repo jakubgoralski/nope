@@ -16,6 +16,9 @@ namespace NeuralNetworkOnPaper
         // Defines how big changes of wages can be made during learning process
         public const double learningRate = 0.1;
 
+        // It's a parameter to  count a momentum
+        public const double alpha = 0.9;
+
         // Implemented types of learning neural networks
         public enum LearningMethod
         {
@@ -70,6 +73,16 @@ namespace NeuralNetworkOnPaper
         public bool IsUnipolar(NeuronType neuronType)
         {
             return neuronType == NeuronType.Unipolar;
+        }
+
+        public LayerType GetLayerType(int currentLayerNumber, int layersAmount)
+        {
+            if (currentLayerNumber == 0)
+                return LayerType.Input;
+            else if (currentLayerNumber == layersAmount - 1)
+                return LayerType.Output;
+            else
+                return LayerType.Hidden;
         }
     }
 }
