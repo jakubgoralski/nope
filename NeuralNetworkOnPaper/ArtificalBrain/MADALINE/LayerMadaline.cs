@@ -25,7 +25,7 @@ namespace NeuralNetworkOnPaper
         }
 
         //
-        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, LayerType layerType)
+        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, LayerType layerType, NeuronType neuronType)
         {
             LayerType = layerType;
             base.Configure(LayerType);
@@ -34,7 +34,7 @@ namespace NeuralNetworkOnPaper
             for (int i = 0; i < neuronsAmount; i++)
             {
                 NeuronAdaline neuron = new NeuronAdaline();
-                neuron.Configure(previousLayerNeuronsAmount, LayerType, random);
+                neuron.Configure(previousLayerNeuronsAmount, LayerType, random, neuronType);
                 neurons.Add(neuron);
             }
         }

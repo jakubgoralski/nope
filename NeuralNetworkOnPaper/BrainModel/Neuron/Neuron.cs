@@ -31,19 +31,24 @@ namespace NeuralNetworkOnPaper
 
         }
 
-        public void Configure(int dendritesAmount, LayerType layerType, Random random, NeuronType neuronType = NeuronType.Bipolar)
+        // Configuration: means creating dendrites, BIAS, and axon
+        public void Configure(int dendritesAmount, LayerType layerType, Random random, NeuronType neuronType)
         {
             NeuronType = neuronType;
             LayerType = layerType;
             Dendrites = new List<Dendrite>();
+
             if (! IsInputLayer(layerType))
-                Bias = new Dendrite(random, neuronType);
+                Bias = new Dendrite(random, NeuronType);
+
             dendritesAmount = IsInputLayer(LayerType) ? 1 : dendritesAmount;
             for (int i = 0; i < dendritesAmount; i++)
-                Dendrites.Add(new Dendrite(random, neuronType, IsInputLayer(LayerType)));
+                Dendrites.Add(new Dendrite(random, NeuronType, IsInputLayer(LayerType)));
+
             Axon = new Axon();
         }
 
+        // Represents suming module of neuron
         public void Run(LinkedList<double> signals)
         {
             if (IsInputLayer(LayerType))
@@ -54,12 +59,14 @@ namespace NeuralNetworkOnPaper
             Axon.activatedSignal = ActivationFunction(Axon.signal);
         }
 
-        public void RunInput(double signal)
+        // Computing sum for neuron in input layer
+        private void RunInput(double signal)
         {
             Axon.signal = Dendrites[0].Run(signal);  
         }
 
-        public void RunNeuron(LinkedList<double> signals)
+        // Computing sum for neuron in hidden and output layers
+        private void RunNeuron(LinkedList<double> signals)
         {
             int i = 0;
             Axon.signal = 0;
@@ -70,23 +77,23 @@ namespace NeuralNetworkOnPaper
             Axon.signal += Bias.Run(1);
         }
 
-        //
-        //public virtual double ActivationFunction(double sum) // means basic Threshold Device
-        //{
-        //    if (sum > 0)
-        //        return 1;
-        //    else
-        //        return -1;
-        //}
-
-        public virtual double ActivationFunction(double sum) // means tangens hiperbolic
+        // Returns final neuron output 
+        public virtual double ActivationFunction(double sum) // means basic Threshold Device used by first artifical neurons
         {
-            //1 / (1 + e ^ (-activation))
-                return 1.0 / (1.0 + Math.Pow(Math.E, -1 * sum));
-            /*
-            double eBs = Math.Pow(Math.E, sum);
-            double emBs = Math.Pow(Math.E, -1 * sum);
-            return (eBs - emBs) / (eBs + emBs);*/
+            if (IsUnipolar(NeuronType))
+            {
+                if (sum > 0)
+                    return 1;
+                else
+                    return 0;
+            }
+            else // Is Bipolar
+            {
+                if (sum > 0)
+                    return 1;
+                else
+                    return -1;
+            }
         }
     }
 }

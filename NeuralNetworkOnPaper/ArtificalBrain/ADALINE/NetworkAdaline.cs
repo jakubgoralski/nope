@@ -25,10 +25,10 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
         }
 
         //
-        public void Configure(int synapseAmount, int neuronAmount)
+        public void Configure(int synapseAmount, int neuronAmount, NeuronType neuronType = NeuronType.Bipolar)
         {
             layer = new LayerAdaline();
-            layer.Configure(neuronAmount, synapseAmount);
+            layer.Configure(neuronAmount, synapseAmount, neuronType);
         }
 
         //

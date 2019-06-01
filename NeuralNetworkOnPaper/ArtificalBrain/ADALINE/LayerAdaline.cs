@@ -23,7 +23,7 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
         }
 
         //
-        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount)
+        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, NeuronType neuronType)
         {
             base.Configure();
             neurons = new List<NeuronAdaline>();
@@ -31,7 +31,7 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
             for (int i = 0; i < neuronsAmount; i++)
             {
                 NeuronAdaline neuron = new NeuronAdaline();
-                neuron.Configure(previousLayerNeuronsAmount, LayerType.Output, random);
+                neuron.Configure(previousLayerNeuronsAmount, LayerType.Output, random, neuronType);
                 neurons.Add(neuron);
             }
         }

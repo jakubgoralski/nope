@@ -30,7 +30,7 @@ namespace NeuralNetworkOnPaper
         }
 
         // Configuration, i.e. creation of new layers, neurons, dendrites and axons
-        public void Configure(int[] neuronsAmount)
+        public void Configure(int[] neuronsAmount, NeuronType neuronType = NeuronType.Bipolar)
         {
             Layers = new List<LayerSigmoid>();
 
@@ -39,7 +39,8 @@ namespace NeuralNetworkOnPaper
                 LayerSigmoid layer = new LayerSigmoid();
                 layer.Configure(neuronsAmount[i],
                                 i == 0 ? 1 : neuronsAmount[i - 1],
-                                GetLayerType(i, neuronsAmount.Length));
+                                GetLayerType(i, neuronsAmount.Length),
+                                neuronType);
                 Layers.Add(layer);
             }
         }
@@ -116,7 +117,7 @@ namespace NeuralNetworkOnPaper
                     continue;
                 }
 
-                layer.ComputeHiddenErrors(new LinkedList<NeuronSigmoid>(Layers[i++].neurons));
+                layer.ComputeHiddenErrors(new LinkedList<NeuronSigmoid>(Layers[i++].Neurons));
             }
 
             // Step 2: Change wages
@@ -125,7 +126,7 @@ namespace NeuralNetworkOnPaper
                 if (IsInputLayer(layer.LayerType))
                     break;
 
-                layer.Delta();
+                layer.ChangeWages();
             }
 
             Layers.Reverse(); // from beginning to end
@@ -142,7 +143,7 @@ namespace NeuralNetworkOnPaper
                 Console.WriteLine($"|                    {layer.LayerType.ToString().Substring(0, 2)} LAYER                             |");
                 Console.WriteLine("+---------------------------------------------------------+");
                 int i = 1;
-                foreach(NeuronSigmoid neuron in layer.neurons)
+                foreach(NeuronSigmoid neuron in layer.Neurons)
                 {
                     Console.WriteLine($"| Neuron {i++}:                                               |");
                     int j = 1;

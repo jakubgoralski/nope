@@ -52,12 +52,15 @@ namespace NeuralNetworkOnPaper
          */
 
         // Returns random weight depending on range and neuron type
-        public double getInitialDendriteWeight(Random random, NeuronType neuronType = NeuronType.Bipolar)
+        public double getInitialDendriteWeight(Random random, NeuronType neuronType)
         {
-            if(IsUnipolar(neuronType))
+            if (IsUnipolar(neuronType))
                 return (random.NextDouble() * (dendriteInitialWeightRange - 0.001) + 0.001);
             else
-                return (random.NextDouble() * (dendriteInitialWeightRange + dendriteInitialWeightRange) + dendriteInitialWeightRange);
+            {
+                double minimum = -1 * dendriteInitialWeightRange;
+                return random.NextDouble() * (dendriteInitialWeightRange - minimum) + minimum;
+            }
         }
 
         // Returns true if this layer is input

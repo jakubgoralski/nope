@@ -26,7 +26,7 @@ namespace NeuralNetworkOnPaper
         }
 
         // 3 layers
-        public void Configure(int[] neuronsAmount)
+        public void Configure(int[] neuronsAmount, NeuronType neuronType = NeuronType.Bipolar)
         {
             int i = 0;
             layers = new List<LayerMadaline>();
@@ -35,7 +35,8 @@ namespace NeuralNetworkOnPaper
                 LayerMadaline layer = new LayerMadaline();
                 layer.Configure(neuronsAmount[i],
                                 i == 0 ? 1 : neuronsAmount[i - 1],
-                                type);
+                                type,
+                                neuronType);
                 i++;
                 layers.Add(layer);
             }

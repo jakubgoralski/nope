@@ -14,7 +14,7 @@ namespace NeuralNetworkOnPaper
          */
 
         //
-        public List<NeuronSigmoid> neurons { get; set; }
+        public List<NeuronSigmoid> Neurons { get; set; }
 
         /*
          * 
@@ -22,24 +22,26 @@ namespace NeuralNetworkOnPaper
          * 
          */
 
-        //
+        // Constructor
         public LayerSigmoid()
         {
 
         }
 
         //
-        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, LayerType layerType)
+        public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, LayerType layerType, NeuronType neuronType)
         {
             LayerType = layerType;
             base.Configure(LayerType);
-            neurons = new List<NeuronSigmoid>();
+
+            Neurons = new List<NeuronSigmoid>();
+
             Random random = new Random();
             for (int i = 0; i < neuronsAmount; i++)
             {
                 NeuronSigmoid neuron = new NeuronSigmoid();
-                neuron.Configure(previousLayerNeuronsAmount, LayerType, random);
-                neurons.Add(neuron);
+                neuron.Configure(previousLayerNeuronsAmount, LayerType, random, neuronType);
+                Neurons.Add(neuron);
             }
         }
 
@@ -56,12 +58,12 @@ namespace NeuralNetworkOnPaper
                 {
                     LinkedList<double> temp = new LinkedList<double>();
                     temp.AddFirst(data);
-                    neurons[i].Run(temp);
-                    DataSetOutput.AddLast(neurons[i++].Axon.activatedSignal);
+                    Neurons[i].Run(temp);
+                    DataSetOutput.AddLast(Neurons[i++].Axon.activatedSignal);
                 }
             }
             else
-                foreach (NeuronSigmoid neuron in neurons)
+                foreach (NeuronSigmoid neuron in Neurons)
                 {
                     neuron.Run(DataSetInput);
                     DataSetOutput.AddLast(neuron.Axon.activatedSignal);
@@ -73,7 +75,7 @@ namespace NeuralNetworkOnPaper
         // use to learn output layer
         public void ComputeOutputErrors(LinkedList<double> expectedResults)
         {
-            foreach (NeuronSigmoid neuron in neurons)
+            foreach (NeuronSigmoid neuron in Neurons)
             {
                 neuron.Error = expectedResults.First.Value - neuron.Axon.activatedSignal;
                 expectedResults.RemoveFirst();
@@ -84,7 +86,7 @@ namespace NeuralNetworkOnPaper
         public void ComputeHiddenErrors(LinkedList<NeuronSigmoid> outputLayer)
         {
             int i = 0;
-            foreach (NeuronSigmoid neuron in neurons)
+            foreach (NeuronSigmoid neuron in Neurons)
             {
                 // compute error
                 neuron.Error = 0;
@@ -98,23 +100,17 @@ namespace NeuralNetworkOnPaper
         }
 
         //
-        public void Delta()
+        public void ChangeWages()
         {
-            int i = 0;
-            foreach (NeuronSigmoid neuron in neurons)
-            {
-                neuron.Error = neuron.Error * (neuron.Axon.activatedSignal * (1.0 - neuron.Axon.activatedSignal));
-                i++;
-                //compute new wages
+            foreach (NeuronSigmoid neuron in Neurons)
                 neuron.ChangeWages();
-            }
         }
 
         //
         public double ObjectiveFunction()
         {
             double sum = 0;
-            foreach (NeuronSigmoid neuron in neurons)
+            foreach (NeuronSigmoid neuron in Neurons)
             {
                 sum += Math.Pow(neuron.Error, 2);
             }
