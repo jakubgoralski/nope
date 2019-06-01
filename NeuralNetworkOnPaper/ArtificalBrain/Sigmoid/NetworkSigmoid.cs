@@ -30,7 +30,7 @@ namespace NeuralNetworkOnPaper
         }
 
         // Configuration, i.e. creation of new layers, neurons, dendrites and axons
-        public void Configure(int[] neuronsAmount, NeuronType neuronType = NeuronType.Bipolar)
+        public void Configure(int[] neuronsAmount, NeuronType neuronType = NeuronType.Bipolar, bool verbose = false)
         {
             Layers = new List<LayerSigmoid>();
 
@@ -43,9 +43,12 @@ namespace NeuralNetworkOnPaper
                                 neuronType);
                 Layers.Add(layer);
             }
+
+            if (verbose)
+                PrintLayers();
         }
 
-        //
+        // Running network with learning part
         public void Learn(List<LinkedList<double>> dataSet, List<LinkedList<double>> expectedResult, int epochAmount = -1, LearningMethod method = LearningMethod.BackpropagationOnline, bool verbose = false)
         {
             int iteration = 0;
@@ -73,6 +76,7 @@ namespace NeuralNetworkOnPaper
 
                 Shuffle(ref dataSet, ref expectedResult);
 
+                //Run and learn
                 var data = dataSet.Zip(expectedResult, (n, w) => new { dataSet = n, expectedResult = w });
                 foreach (var row in data)
                 {
@@ -86,11 +90,11 @@ namespace NeuralNetworkOnPaper
                     Backpropagation(expectedResult.Last());
             } while (true);
 
-           // if (verbose)
-                Console.WriteLine($"Epochs number: {iteration}; Objective Function: {Layers.Last().ObjectiveFunction()}");
+            if (verbose)
+                Console.WriteLine($"Epochs amount = {iteration}; Objective Function = {Layers.Last().ObjectiveFunction()}");
         }
 
-        //
+        // Running network without learning part
         public LinkedList<double> Examine(LinkedList<double> signals)
         {
             foreach(LayerSigmoid layer in Layers)
@@ -99,7 +103,7 @@ namespace NeuralNetworkOnPaper
             return signals;
         }
 
-        //
+        // Two steps learning method
         public void Backpropagation(LinkedList<double> expectedResult)
         {
             Layers.Reverse(); // from end to beginning
@@ -132,7 +136,7 @@ namespace NeuralNetworkOnPaper
             Layers.Reverse(); // from beginning to end
         }
 
-        //
+        // Helps to see how looks wages and signals inside the network
         public void PrintLayers()
         {
             Console.WriteLine("+---------------------------------------------------------+");

@@ -72,17 +72,17 @@ namespace NeuralNetworkOnPaper
             return DataSetOutput;
         }
 
-        // use to learn output layer
+        // Compute error value for neuron in output layer
         public void ComputeOutputErrors(LinkedList<double> expectedResults)
         {
             foreach (NeuronSigmoid neuron in Neurons)
             {
-                neuron.Error = expectedResults.First.Value - neuron.Axon.activatedSignal;
+                neuron.Delta(expectedResults.First.Value);
                 expectedResults.RemoveFirst();
             }
         }
 
-        // use to learn hidden layer
+        // Compute error value for neuron in hidden layer
         public void ComputeHiddenErrors(LinkedList<NeuronSigmoid> outputLayer)
         {
             int i = 0;
@@ -99,14 +99,14 @@ namespace NeuralNetworkOnPaper
             }
         }
 
-        //
+        // Runs chanhing wages functionality in neurons
         public void ChangeWages()
         {
             foreach (NeuronSigmoid neuron in Neurons)
                 neuron.ChangeWages();
         }
 
-        //
+        // Compute value of Objective Function
         public double ObjectiveFunction()
         {
             double sum = 0;

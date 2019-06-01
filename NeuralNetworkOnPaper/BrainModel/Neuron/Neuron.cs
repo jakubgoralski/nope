@@ -77,6 +77,12 @@ namespace NeuralNetworkOnPaper
             Axon.signal += Bias.Run(1);
         }
 
+        // Compute Error using Delta method
+        public void Delta(double expectedResult)
+        {
+            Error = expectedResult - Axon.activatedSignal;
+        }
+
         // Returns final neuron output 
         public virtual double ActivationFunction(double sum) // means basic Threshold Device used by first artifical neurons
         {

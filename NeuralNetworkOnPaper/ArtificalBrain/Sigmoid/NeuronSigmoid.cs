@@ -30,7 +30,6 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
             Bias.LastWeight = Bias.PenultimateWeight;
         }
 
-        //
         public override double ActivationFunction(double sum) // means tangens hiperbolic
         {
             if (IsUnipolar(NeuronType))
@@ -45,7 +44,7 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
             }
         }
 
-        //
+        // Used for computing neuron error value
         public double Derivative()
         {
             if (IsUnipolar(NeuronType))
