@@ -42,25 +42,5 @@ namespace NeuralNetworkOnPaper.BrainBooster
                 resultSet[n] = tempResult;
             }
         }
-
-        ////
-        //public double ComputeError(LinkedList<double> expectedResult, LinkedList<double> givenResult)
-        //{
-        //    double expected, given, sum = 0;
-        //    int n = expectedResult.Count;
-
-        //    for (int i = 0; i < n; i++)
-        //    {
-        //        expected = expectedResult.First.Value;
-        //        given = givenResult.First.Value;
-
-        //        expectedResult.RemoveFirst();
-        //        givenResult.RemoveFirst();
-
-        //        sum += Math.Pow(expected - given, 2);
-        //    }
-
-        //    return sum / 2;
-        //}
     }
 }

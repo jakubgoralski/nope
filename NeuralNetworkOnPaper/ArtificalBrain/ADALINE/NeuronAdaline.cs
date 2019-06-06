@@ -1,31 +1,30 @@
-﻿using NeuralNetworkOnPaper.BrainModel;
-
-namespace NeuralNetworkOnPaper.ArtificalBrain
+﻿namespace NeuralNetworkOnPaper.ArtificalBrain
 {
     public class NeuronAdaline : Neuron
     {
         /*
-         * PROPERTIES
-         */
-
-        /*
+         * 
          * METHODS
+         * 
          */
 
-        //
+        // Constructor
         public NeuronAdaline()
         {
-
+            Error = 1;
         }
 
-        //
-        public void Delta()
+        // Represents computation combine with Delta algorithm
+        public void ChangeWages()
         {
-            foreach (Dendrite synapse in Dendrites)
+            // Compute wages of dendrites
+            foreach (Dendrite dendrite in Dendrites)
             {
-                synapse.Weight = synapse.Weight - learningRate * Error * synapse.SignalInput;
+                dendrite.Weight = dendrite.Weight + learningRate * Error * dendrite.SignalInput;
             }
-            Bias.Weight = Bias.Weight - learningRate * Error;
+
+            // Compute wage of BIAS
+            Bias.Weight = Bias.Weight + learningRate * Error;
         }
     }
 }

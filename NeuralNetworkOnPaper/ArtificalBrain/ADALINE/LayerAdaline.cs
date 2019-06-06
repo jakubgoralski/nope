@@ -56,11 +56,12 @@ namespace NeuralNetworkOnPaper.ArtificalBrain.ADALINE
         {
             foreach (NeuronAdaline neuron in neurons)
             {
-                //compute error
-                neuron.Error = expectedResults.First.Value - neuron.Axon.signal; // objective function: error = expected result - given result
+                // Compute error
+                neuron.Delta(expectedResults.First.Value);
                 expectedResults.RemoveFirst();
-                //compute new wages
-                neuron.Delta();
+
+                // Compute new wages
+                neuron.ChangeWages();
             }
         }
     }

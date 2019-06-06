@@ -13,10 +13,15 @@ namespace NeuralNetworkOnPaper
          */
 
         public new LayerType LayerType { get; set; }
+
         public new NeuronType NeuronType { get; set; }
+
         public List<Dendrite> Dendrites { get; set; }
+
         public Dendrite Bias { get; set; }
+
         public Axon Axon { get; set; }
+
         public double Error { get; set; }
 
         /*

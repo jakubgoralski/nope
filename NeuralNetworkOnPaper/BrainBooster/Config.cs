@@ -19,13 +19,14 @@ namespace NeuralNetworkOnPaper
         // It's a parameter to  count a momentum
         public const double alpha = 0.9;
 
-        // If epoch amount is not defined then learning algoritm run untill error is less than this value
+        // If epoch amount is not defined then learning algoritm run until Objective Function value is less than this value
         public const double permittedError = 0.00000001;
 
         // Implemented types of learning neural networks
         public enum LearningMethod
         {
             Delta,
+            MadalineRuleII,
             BackpropagationOnline,
             BackpropagationOffline
         }
@@ -84,7 +85,7 @@ namespace NeuralNetworkOnPaper
         // Returns type of layer given in position order
         public LayerType GetLayerType(int currentLayerNumber, int layersAmount)
         {
-            if (currentLayerNumber == 0)
+            if (currentLayerNumber == 0 && layersAmount != 1)
                 return LayerType.Input;
             else if (currentLayerNumber == layersAmount - 1)
                 return LayerType.Output;
@@ -92,16 +93,28 @@ namespace NeuralNetworkOnPaper
                 return LayerType.Hidden;
         }
 
-        // Returns true if method is online
+        // Returns true if method is Backpropagation online
         public bool IsOnline(LearningMethod learningMethod)
         {
             return learningMethod == LearningMethod.BackpropagationOnline;
         }
 
-        // Returns true if method is offline
+        // Returns true if method is Backpropagation offline
         public bool IsOffline(LearningMethod learningMethod)
         {
             return learningMethod == LearningMethod.BackpropagationOffline;
+        }
+
+        // Returns true if method is Delta
+        public bool IsDelta(LearningMethod learningMethod)
+        {
+            return learningMethod == LearningMethod.Delta;
+        }
+
+        // Returns true if method is Madaline Rule II
+        public bool IsMRII(LearningMethod learningMethod)
+        {
+            return learningMethod == LearningMethod.MadalineRuleII;
         }
     }
 }

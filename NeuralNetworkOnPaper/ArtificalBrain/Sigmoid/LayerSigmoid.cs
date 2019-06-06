@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace NeuralNetworkOnPaper
 {
-    //consider if not delete this class
     class LayerSigmoid : Layer
     {
         /*
@@ -13,7 +12,7 @@ namespace NeuralNetworkOnPaper
          * 
          */
 
-        //
+        // List of neurons contained in this layer
         public List<NeuronSigmoid> Neurons { get; set; }
 
         /*
@@ -28,7 +27,7 @@ namespace NeuralNetworkOnPaper
 
         }
 
-        //
+        // Configure: create neurons, dendrites, axons etc.
         public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, LayerType layerType, NeuronType neuronType)
         {
             LayerType = layerType;
@@ -45,7 +44,7 @@ namespace NeuralNetworkOnPaper
             }
         }
 
-        //
+        // Fire all neurons in this layer with received data
         public LinkedList<double> Run(LinkedList<double> dataSet)
         {
             DataSetInput = dataSet;

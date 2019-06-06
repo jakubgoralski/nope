@@ -8,38 +8,45 @@ namespace NeuralNetworkOnPaper
     class LayerMadaline : Layer
     {
         /*
+         * 
          * PROPERTIES
+         * 
          */
 
         //
-        public List<NeuronAdaline> neurons { get; set; }
+        public List<NeuronAdaline> Neurons { get; set; }
+
+        //
+        public List<NeuronAdaline> PreviousNeurons { get; set; }
 
         /*
+         * 
          * METHODS
+         * 
          */
 
-        //
+        // Constructor
         public LayerMadaline()
         {
 
         }
 
-        //
+        // Configure: create neurons etc...
         public void Configure(int neuronsAmount, int previousLayerNeuronsAmount, LayerType layerType, NeuronType neuronType)
         {
             LayerType = layerType;
             base.Configure(LayerType);
-            neurons = new List<NeuronAdaline>();
+            Neurons = new List<NeuronAdaline>();
             Random random = new Random();
             for (int i = 0; i < neuronsAmount; i++)
             {
                 NeuronAdaline neuron = new NeuronAdaline();
                 neuron.Configure(previousLayerNeuronsAmount, LayerType, random, neuronType);
-                neurons.Add(neuron);
+                Neurons.Add(neuron);
             }
         }
 
-        //
+        // Fire all neurons in this layer with received data
         public LinkedList<double> Run(LinkedList<double> dataSet)
         {
             DataSetInput = dataSet;
@@ -52,12 +59,12 @@ namespace NeuralNetworkOnPaper
                 {
                     LinkedList<double> temp = new LinkedList<double>();
                     temp.AddFirst(data);
-                    neurons[i].Run(temp);
-                    DataSetOutput.AddLast(neurons[i++].Axon.activatedSignal);
+                    Neurons[i].Run(temp);
+                    DataSetOutput.AddLast(Neurons[i++].Axon.activatedSignal);
                 }
             }
             else
-                foreach (NeuronAdaline neuron in neurons)
+                foreach (NeuronAdaline neuron in Neurons)
                 {
                     neuron.Run(DataSetInput);
                     DataSetOutput.AddLast(neuron.Axon.activatedSignal);
@@ -69,30 +76,54 @@ namespace NeuralNetworkOnPaper
         // use to learn output layer
         public void Delta(LinkedList<double> expectedResults)
         {
-            foreach (NeuronAdaline neuron in neurons)
+            foreach (NeuronAdaline neuron in Neurons)
             {
-                neuron.Error = Math.Pow(expectedResults.First.Value - neuron.Axon.signal,2)/2; // objective function: error = expected result - given result
+                // Compute error
+                neuron.Delta(expectedResults.First.Value);
                 expectedResults.RemoveFirst();
-                neuron.Delta();
+
+                // Compute new wages
+                neuron.ChangeWages();
             }
         }
 
-        // use to learn hidden layer
-        public void Delta(LinkedList<NeuronAdaline> outputLayer)
+        // Compute error value for neuron in output layer
+        public void ComputeOutputErrors(LinkedList<double> expectedResults)
+        {
+            foreach (NeuronAdaline neuron in Neurons)
+            {
+                neuron.Delta(expectedResults.First.Value);
+                expectedResults.RemoveFirst();
+            }
+        }
+
+        // Compute error value for neuron in hidden layer
+        public void ComputeHiddenErrors(LinkedList<NeuronAdaline> outputLayer)
         {
             int i = 0;
-            foreach (NeuronAdaline neuron in neurons)
+            foreach (NeuronAdaline neuron in Neurons)
             {
                 // compute error
                 neuron.Error = 0;
-                foreach(NeuronAdaline neuronOutput in outputLayer)
+                foreach (NeuronAdaline neuronOutput in outputLayer)
                 {
                     neuron.Error += neuronOutput.Dendrites[i].Weight * neuronOutput.Error;
                 }
+                neuron.Error = neuron.Error * neuron.Axon.activatedSignal;
                 i++;
-                //compute new wages
-                neuron.Delta();
             }
+        }
+
+        // Compute value of Objective Function
+        public double ObjectiveFunction()
+        {
+            double sum = 0;
+            foreach (NeuronAdaline neuron in Neurons)
+            {
+                sum += Math.Pow(neuron.Error, 2);
+            }
+
+            return sum / 2;
         }
     }
 }

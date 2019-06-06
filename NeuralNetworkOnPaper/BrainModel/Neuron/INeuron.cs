@@ -13,6 +13,9 @@ namespace NeuralNetworkOnPaper
          * 
          */
 
+        // Infors in which layer neuron is
+        LayerType LayerType { get; set; }
+
         // Informs which type neuron is
         NeuronType NeuronType { get; set; }
 
@@ -24,6 +27,9 @@ namespace NeuralNetworkOnPaper
 
         // Represents one output of neuron
         Axon Axon { get; set; }
+
+        // Value of neuron output error
+        double Error { get; set; }
 
         /*
          * 
