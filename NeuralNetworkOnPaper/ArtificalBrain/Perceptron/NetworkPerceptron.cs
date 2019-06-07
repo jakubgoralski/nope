@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace NeuralNetworkOnPaper
 {
-    public class NetworkSigmoid : Learn
+    public class NetworkPerceptron : Learn
     {
         /*
          * 
@@ -24,7 +24,7 @@ namespace NeuralNetworkOnPaper
          */
 
         // Constructor
-        public NetworkSigmoid()
+        public NetworkPerceptron()
         {
 
         }

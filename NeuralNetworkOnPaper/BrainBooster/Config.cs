@@ -20,7 +20,7 @@ namespace NeuralNetworkOnPaper
         public const double alpha = 0.9;
 
         // If epoch amount is not defined then learning algoritm run until Objective Function value is less than this value
-        public const double permittedError = 0.00000001;
+        public const double permittedError = 0.000000001;
 
         // Implemented types of learning neural networks
         public enum LearningMethod
@@ -85,7 +85,7 @@ namespace NeuralNetworkOnPaper
         // Returns type of layer given in position order
         public LayerType GetLayerType(int currentLayerNumber, int layersAmount)
         {
-            if (currentLayerNumber == 0 && layersAmount != 1)
+            if (currentLayerNumber == 0)
                 return LayerType.Input;
             else if (currentLayerNumber == layersAmount - 1)
                 return LayerType.Output;

@@ -40,14 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArtificalBrain\ADALINE\LayerAdaline.cs" />
-    <Compile Include="ArtificalBrain\ADALINE\NetworkAdaline.cs" />
     <Compile Include="ArtificalBrain\MADALINE\LayerMadaline.cs" />
-    <Compile Include="ArtificalBrain\ADALINE\NeuronAdaline.cs" />
+    <Compile Include="ArtificalBrain\MADALINE\NeuronAdaline.cs" />
     <Compile Include="ArtificalBrain\MADALINE\NetworkMadaline.cs" />
-    <Compile Include="ArtificalBrain\Sigmoid\LayerSigmoid.cs" />
-    <Compile Include="ArtificalBrain\Sigmoid\NetworkSigmoid.cs" />
-    <Compile Include="ArtificalBrain\Sigmoid\NeuronSigmoid.cs" />
+    <Compile Include="ArtificalBrain\Perceptron\LayerSigmoid.cs" />
+    <Compile Include="ArtificalBrain\Perceptron\NetworkPerceptron.cs" />
+    <Compile Include="ArtificalBrain\Perceptron\NeuronSigmoid.cs" />
     <Compile Include="BrainBooster\Learn.cs" />
     <Compile Include="BrainModel\Axon.cs" />
     <Compile Include="BrainModel\Layer\ILayer.cs" />

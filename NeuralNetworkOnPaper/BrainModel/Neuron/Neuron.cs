@@ -36,7 +36,7 @@ namespace NeuralNetworkOnPaper
 
         }
 
-        // Configuration: means creating dendrites, BIAS, and axon
+        // Configuration: means creating dendrites, BIAS and axon
         public void Configure(int dendritesAmount, LayerType layerType, Random random, NeuronType neuronType)
         {
             NeuronType = neuronType;
@@ -93,7 +93,7 @@ namespace NeuralNetworkOnPaper
         {
             if (IsUnipolar(NeuronType))
             {
-                if (sum > 0)
+                if (sum > 0.5)
                     return 1;
                 else
                     return 0;

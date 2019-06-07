@@ -8,10 +8,10 @@
          * 
          */
 
-        // Represents value of activation function
+        // Represents value of summing module output
         public double signal { get; set; }
 
-        // Represents value of final function
+        // Represents output value of final function
         public double activatedSignal { get; set; }
     }
 }
