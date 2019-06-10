@@ -24,6 +24,8 @@ namespace NeuralNetworkOnPaper
 
         public double Error { get; set; }
 
+        public bool freezed { get; set; }
+
         /*
          * 
          * METHODS
@@ -42,6 +44,7 @@ namespace NeuralNetworkOnPaper
             NeuronType = neuronType;
             LayerType = layerType;
             Dendrites = new List<Dendrite>();
+            freezed = false;
 
             if (! IsInputLayer(layerType))
                 Bias = new Dendrite(random, NeuronType);
@@ -56,6 +59,8 @@ namespace NeuralNetworkOnPaper
         // Represents suming module of neuron
         public void Run(LinkedList<double> signals)
         {
+            if (freezed)
+                return;
             if (IsInputLayer(LayerType))
                 RunInput(signals.First.Value);
             else
@@ -85,7 +90,7 @@ namespace NeuralNetworkOnPaper
         // Compute Error using Delta method
         public void Delta(double expectedResult)
         {
-            Error = expectedResult - Axon.activatedSignal;
+            Error = expectedResult - Axon.signal;
         }
 
         // Returns final neuron output 

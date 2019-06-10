@@ -11,7 +11,7 @@ namespace NeuralNetworkOnPaper
          */
 
         // If neuron is unipolar then it's range from 0.001 to this value, if bipolar then real range is from -value to +value
-        public const double dendriteInitialWeightRange = 0.1; 
+        public const double dendriteInitialWeightRange = 0.1; //0.1
 
         // Defines how big changes of wages can be made during learning process
         public const double learningRate = 0.1;
@@ -20,7 +20,7 @@ namespace NeuralNetworkOnPaper
         public const double alpha = 0.9;
 
         // If epoch amount is not defined then learning algoritm run until Objective Function value is less than this value
-        public const double permittedError = 0.000000001;
+        public const double permittedError = 0.00000001;
 
         // Implemented types of learning neural networks
         public enum LearningMethod

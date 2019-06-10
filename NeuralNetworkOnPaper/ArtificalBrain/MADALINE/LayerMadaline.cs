@@ -42,6 +42,7 @@ namespace NeuralNetworkOnPaper
             {
                 NeuronAdaline neuron = new NeuronAdaline();
                 neuron.Configure(previousLayerNeuronsAmount, LayerType, random, neuronType);
+                neuron.OriginalIndex = i;
                 Neurons.Add(neuron);
             }
         }
@@ -83,7 +84,7 @@ namespace NeuralNetworkOnPaper
                 expectedResults.RemoveFirst();
 
                 // Compute new wages
-                neuron.ChangeWages();
+                neuron.ChangeWagesSingleNeuron();
             }
         }
 
