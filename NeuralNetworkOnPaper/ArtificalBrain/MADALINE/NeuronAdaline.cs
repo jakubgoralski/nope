@@ -1,4 +1,5 @@
 ﻿using System;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper.ArtificalBrain
 {
@@ -11,6 +12,8 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
          */
 
         public int OriginalIndex { get; set; }
+
+        public bool freezed { get; set; }
 
         /*
          * 
@@ -73,6 +76,12 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
             // Revert original output values
             Axon.signal = stashAxonSignal;
             Axon.activatedSignal = stashAxonActivatedSignal;
+        }
+
+        // Compute Error using Delta method
+        public void Delta(double expectedResult)
+        {
+            Error = expectedResult - Axon.signal;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper.ArtificalBrain
 {
@@ -30,6 +31,12 @@ namespace NeuralNetworkOnPaper.ArtificalBrain
             temp = Bias.Weight;
             Bias.Weight = Bias.Weight + learningRate * Error + alpha * (Bias.Weight - Bias.LastWeight);
             Bias.LastWeight = temp;
+        }
+
+        // Compute Error using Delta method
+        public void Delta(double expectedResult)
+        {
+            Error = expectedResult - Axon.activatedSignal;
         }
 
         public override double ActivationFunction(double sum) 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using static NeuralNetworkOnPaper.Config;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper
 {

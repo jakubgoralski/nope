@@ -1,8 +1,9 @@
 ﻿using System;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper
 {
-    public class Dendrite : Config
+    public class Dendrite
     {
         /*
          * 

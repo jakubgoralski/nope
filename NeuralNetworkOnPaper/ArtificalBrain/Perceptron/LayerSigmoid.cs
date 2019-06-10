@@ -1,6 +1,7 @@
 ﻿using NeuralNetworkOnPaper.ArtificalBrain;
 using System;
 using System.Collections.Generic;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper
 {

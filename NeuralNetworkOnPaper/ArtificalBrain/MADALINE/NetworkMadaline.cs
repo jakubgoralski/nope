@@ -3,6 +3,7 @@ using NeuralNetworkOnPaper.BrainBooster;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper
 {
@@ -14,7 +15,7 @@ namespace NeuralNetworkOnPaper
          * 
          */
 
-        //
+        // List of all Madaline layers
         private List<LayerMadaline> Layers { get; set; }
 
         /*
@@ -81,6 +82,7 @@ namespace NeuralNetworkOnPaper
                 else
                     break; // no other learning method implemented for MADALINE
             } while (true);
+
             if (verbose)
             {
                 Console.WriteLine("Epochs: " + iteration.ToString());
@@ -150,7 +152,7 @@ namespace NeuralNetworkOnPaper
             }
         }
 
-        //
+        // Running network without learning part
         public LinkedList<double> Examine(LinkedList<double> signals)
         {
             foreach(LayerMadaline layer in Layers)
@@ -158,7 +160,7 @@ namespace NeuralNetworkOnPaper
             return signals;
         }
 
-        //
+        // Helps to see how looks wages and signals inside the network
         public void PrintLayers()
         {
             foreach (LayerMadaline layer in Layers)

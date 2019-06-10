@@ -1,10 +1,11 @@
 ﻿using NeuralNetworkOnPaper.BrainModel;
 using System;
 using System.Collections.Generic;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper
 {
-    public class Neuron : Config, INeuron
+    public class Neuron : INeuron
     {
         /*
          * 
@@ -12,9 +13,9 @@ namespace NeuralNetworkOnPaper
          * 
          */
 
-        public new LayerType LayerType { get; set; }
+        public LayerType LayerType { get; set; }
 
-        public new NeuronType NeuronType { get; set; }
+        public NeuronType NeuronType { get; set; }
 
         public List<Dendrite> Dendrites { get; set; }
 
@@ -23,8 +24,6 @@ namespace NeuralNetworkOnPaper
         public Axon Axon { get; set; }
 
         public double Error { get; set; }
-
-        public bool freezed { get; set; }
 
         /*
          * 
@@ -44,7 +43,6 @@ namespace NeuralNetworkOnPaper
             NeuronType = neuronType;
             LayerType = layerType;
             Dendrites = new List<Dendrite>();
-            freezed = false;
 
             if (! IsInputLayer(layerType))
                 Bias = new Dendrite(random, NeuronType);
@@ -59,8 +57,6 @@ namespace NeuralNetworkOnPaper
         // Represents suming module of neuron
         public void Run(LinkedList<double> signals)
         {
-            if (freezed)
-                return;
             if (IsInputLayer(LayerType))
                 RunInput(signals.First.Value);
             else
@@ -85,12 +81,6 @@ namespace NeuralNetworkOnPaper
                 Axon.signal += Dendrites[i++].Run(signal);
             }
             Axon.signal += Bias.Run(1);
-        }
-
-        // Compute Error using Delta method
-        public void Delta(double expectedResult)
-        {
-            Error = expectedResult - Axon.signal;
         }
 
         // Returns final neuron output 

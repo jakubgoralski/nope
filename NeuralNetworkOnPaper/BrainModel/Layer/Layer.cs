@@ -1,5 +1,6 @@
 ﻿using NeuralNetworkOnPaper.BrainBooster;
 using System.Collections.Generic;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper
 {
@@ -12,9 +13,12 @@ namespace NeuralNetworkOnPaper
          */
 
         // (list of specific neurons is implemented in every version of layers in ArtificalBrain folder)
+
         public LinkedList<double> DataSetInput { get; set; }
+
         public LinkedList<double> DataSetOutput { get; set; }
-        public new LayerType LayerType { get; set; }
+
+        public LayerType LayerType { get; set; }
 
         /*
          * 

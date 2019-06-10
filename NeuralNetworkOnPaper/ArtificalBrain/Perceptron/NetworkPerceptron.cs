@@ -3,6 +3,7 @@ using NeuralNetworkOnPaper.BrainBooster;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper
 {
@@ -91,7 +92,10 @@ namespace NeuralNetworkOnPaper
             } while (true);
 
             if (verbose)
+            {
                 Console.WriteLine($"Epochs amount = {iteration}; Objective Function = {Layers.Last().ObjectiveFunction()}");
+                PrintLayers();
+            }
         }
 
         // Running network without learning part

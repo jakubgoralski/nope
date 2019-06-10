@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NeuralNetworkOnPaper.BrainBooster
 {
-    public class Learn : Config
+    public class Learn
     {
         /*
          * 

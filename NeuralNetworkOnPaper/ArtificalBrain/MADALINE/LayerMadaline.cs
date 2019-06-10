@@ -1,6 +1,7 @@
 ﻿using NeuralNetworkOnPaper.ArtificalBrain;
 using System;
 using System.Collections.Generic;
+using static NeuralNetworkOnPaper.BrainBooster.Config;
 
 namespace NeuralNetworkOnPaper
 {
@@ -13,11 +14,8 @@ namespace NeuralNetworkOnPaper
          * 
          */
 
-        //
+        // List of all neurons in this layer
         public List<NeuronAdaline> Neurons { get; set; }
-
-        //
-        public List<NeuronAdaline> PreviousNeurons { get; set; }
 
         /*
          * 
@@ -67,14 +65,15 @@ namespace NeuralNetworkOnPaper
             else
                 foreach (NeuronAdaline neuron in Neurons)
                 {
-                    neuron.Run(DataSetInput);
+                    if (! neuron.freezed)
+                        neuron.Run(DataSetInput);
                     DataSetOutput.AddLast(neuron.Axon.activatedSignal);
                 }
 
             return DataSetOutput;
         }
 
-        // use to learn output layer
+        // Use to learn output layer
         public void Delta(LinkedList<double> expectedResults)
         {
             foreach (NeuronAdaline neuron in Neurons)
@@ -95,23 +94,6 @@ namespace NeuralNetworkOnPaper
             {
                 neuron.Delta(expectedResults.First.Value);
                 expectedResults.RemoveFirst();
-            }
-        }
-
-        // Compute error value for neuron in hidden layer
-        public void ComputeHiddenErrors(LinkedList<NeuronAdaline> outputLayer)
-        {
-            int i = 0;
-            foreach (NeuronAdaline neuron in Neurons)
-            {
-                // compute error
-                neuron.Error = 0;
-                foreach (NeuronAdaline neuronOutput in outputLayer)
-                {
-                    neuron.Error += neuronOutput.Dendrites[i].Weight * neuronOutput.Error;
-                }
-                neuron.Error = neuron.Error * neuron.Axon.activatedSignal;
-                i++;
             }
         }
 
